@@ -264,10 +264,26 @@ ul {
 .intro {
   padding: 3px 0 50px;
   display: grid;
-  grid-template-columns: 1fr 220px;
+  grid-template-columns: minmax(0, 1fr) 300px;
   gap: 60px;
   align-items: center;
   border-bottom: 1px solid var(--line);
+}
+.home-motto {
+  margin: 0 0 24px;
+  color: var(--sub);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+.intro-photo {
+  margin: 0;
+  width: 100%;
+}
+.intro-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
 }
 .intro h1 {
   font-size: 3rem;

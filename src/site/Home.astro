@@ -1,6 +1,7 @@
 ---
 import {
   catalog,
+  base,
   dateLabel,
   entryUrl,
   local,
@@ -11,7 +12,6 @@ import {
   type Lang
 } from './data'
 import Layout from './Layout.astro'
-import Mark from './Mark.astro'
 
 interface Props {
   lang: Lang
@@ -24,9 +24,10 @@ const posts = visibleEntries(entries, lang)
 ---
 
 <Layout {lang} title={t(lang, '首页', 'Home')} alternate={url(lang === 'zh' ? 'en' : 'zh')}>
+  <p class='home-motto'>No matter what happened，just keep going.</p>
   <section class='intro'>
     <div>
-      <div class='eyebrow'>A PERSONAL KNOWLEDGE SPACE</div><h1>
+      <h1>
         {local(catalog.profile.title, lang)}
       </h1><p>{local(catalog.profile.bio, lang)}</p><div class='intro-links'>
         <a href={url(lang, 'academic')}>{t(lang, '关于我', 'About me')} ↗</a><a
@@ -34,14 +35,10 @@ const posts = visibleEntries(entries, lang)
         >{catalog.profile.github && <a href={catalog.profile.github}>GitHub ↗</a>}
       </div>
     </div>
-    <div class='identity-block'>
-      <div class='initial'>
-        <Mark size={68} />
-      </div><div class='name'>{local(catalog.profile.name, lang)}</div><small
-        >{t(lang, '个人主页 · 学习笔记', 'Personal website · Learning notes')}</small
-      ><small style='margin-top:12px'
-        >{t(lang, '保持好奇，持续记录。', 'Stay curious. Keep notes.')}</small>
-    </div>
+    <figure class='intro-photo'>
+      <img src={base + '/rose.jpg'} width='1080' height='810'
+        alt={t(lang, '黑白运动训练照片', 'Black-and-white athletic training photograph')} />
+    </figure>
   </section>
   <div class='home-grid'>
     <section>
