@@ -6,16 +6,16 @@
       "en": "Jiayu Sun"
     },
     "title": {
-      "zh": "研究、构建，然后记录。",
-      "en": "Research. Build. Reflect."
+      "zh": "about me",
+      "en": "about me"
     },
     "bio": {
-      "zh": "我是孙嘉渝（Jiayu Sun），电子科技大学软件工程专业本科生，关注具身智能与强化学习。目前主要探索视觉—语言—动作（VLA）模型的多任务强化学习与策略融合，也曾参与基于 IsaacLab 和 Unitree G1 的仿真到真实机器人流程搭建。希望通过这个网站记录研究思考、技术实践、课程笔记与日常生活。",
-      "en": "I'm Jiayu Sun, an undergraduate studying Software Engineering at the University of Electronic Science and Technology of China (UESTC). My interests lie in embodied AI and reinforcement learning. I currently explore multi-task reinforcement learning and policy merging for vision-language-action (VLA) models, and have worked on a sim-to-real robotics pipeline using IsaacLab and Unitree G1. Here, I share research reflections, technical projects, course notes, and moments from everyday life."
+      "zh": "你好，我是孙嘉渝，浙江大学 2027 年秋季入学的准博士生（incoming PhD），主要从事具身智能领域的研究。目前，我就读于电子科技大学信息与软件工程学院，也是穆尧老师指导下的访问学生。\n\n我仍在寻找自己的科研主线与志同道合的朋友，也在不断学习具身智能各个方向的基础知识。\n\n科研之外，我仍在努力减肥。我喜欢学习不同领域的知识，最近在学习博弈论与经济学；跨领域的学习总能让我从新的角度认识世界。我也喜欢阅读人物传记，例如《乔布斯传》和《人类群星闪耀时》。我热爱篮球、羽毛球和健身，欢迎找我打球、约练。或许未来某一天，我也会尝试绘画、音乐等艺术领域。\n\n我将在这个网站记录科研与学习中的思考和感悟，逐步打造自己的个人信息管理中心。",
+      "en": "Hi, I'm Jiayu Sun, an incoming PhD student at Zhejiang University starting in Fall 2027. My research focuses on embodied AI. I am currently a student at the School of Information and Software Engineering, University of Electronic Science and Technology of China (UESTC), and a visiting student under the supervision of Prof. Yao Mu.\n\nI'm still finding my research direction and looking for like-minded friends, while continuing to learn the foundations of different areas of embodied AI.\n\nOutside research, I'm still working on losing weight. I enjoy learning across disciplines, and lately I've been studying game theory and economics. Exploring different fields always gives me new ways to see the world. I also enjoy biographies, such as Steve Jobs and Decisive Moments in History. I love basketball, badminton, and working out—feel free to join me for a game or a workout. Someday, I may also try drawing, music, and other forms of art.\n\nOn this website, I'll share reflections from my research and learning, gradually building a personal hub for organizing knowledge and information."
     },
     "about": {
-      "zh": "我是孙嘉渝（Jiayu Sun），电子科技大学软件工程专业本科生，关注具身智能与强化学习。目前主要探索视觉—语言—动作（VLA）模型的多任务强化学习与策略融合，也曾参与基于 IsaacLab 和 Unitree G1 的仿真到真实机器人流程搭建。希望通过这个网站记录研究思考、技术实践、课程笔记与日常生活。",
-      "en": "I'm Jiayu Sun, an undergraduate studying Software Engineering at the University of Electronic Science and Technology of China (UESTC). My interests lie in embodied AI and reinforcement learning. I currently explore multi-task reinforcement learning and policy merging for vision-language-action (VLA) models, and have worked on a sim-to-real robotics pipeline using IsaacLab and Unitree G1. Here, I share research reflections, technical projects, course notes, and moments from everyday life."
+      "zh": "你好，我是孙嘉渝，浙江大学 2027 年秋季入学的准博士生（incoming PhD），主要从事具身智能领域的研究。目前，我就读于电子科技大学信息与软件工程学院，也是穆尧老师指导下的访问学生。\n\n我仍在寻找自己的科研主线与志同道合的朋友，也在不断学习具身智能各个方向的基础知识。",
+      "en": "Hi, I'm Jiayu Sun, an incoming PhD student at Zhejiang University starting in Fall 2027. My research focuses on embodied AI. I am currently a student at the School of Information and Software Engineering, University of Electronic Science and Technology of China (UESTC), and a visiting student under the supervision of Prof. Yao Mu.\n\nI'm still finding my research direction and looking for like-minded friends, while continuing to learn the foundations of different areas of embodied AI."
     },
     "github": "https://github.com/SunJiayu-L",
     "email": "",

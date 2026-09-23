@@ -1261,3 +1261,8 @@ ul {
 .prose h4 {
   color: var(--ink);
 }
+
+/* Preserve paragraph breaks in the personal introduction. */
+.intro p, .academic-about, .research-summary p {
+  white-space: pre-line;
+}
