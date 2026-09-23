@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process'
+import { rm } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { close, createIndex } from 'pagefind'
 
@@ -6,6 +7,8 @@ import { check } from './check-content.mjs'
 
 process.chdir(fileURLToPath(new URL('../', import.meta.url)))
 await check(process.argv.includes('--production'))
+// A fully emptied collection must not retain entries from a previous local build.
+await rm('.astro/data-store.json', { force: true })
 for (const command of ['check', 'build']) {
   const result = spawnSync(process.execPath, ['node_modules/astro/astro.js', command], {
     stdio: 'inherit',

@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
-    if: vars.SITE_READY == 'true'
+    if: vars.SITE_READY != 'false'
     runs-on: ubuntu-latest
     permissions:
       contents: read

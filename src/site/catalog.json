@@ -1,5 +1,5 @@
 {
-  "demo": true,
+  "demo": false,
   "profile": {
     "name": {
       "zh": "孙嘉渝",
@@ -22,78 +22,9 @@
     "scholar": "",
     "cv": ""
   },
-  "courses": [
-    {
-      "slug": "machine-learning",
-      "title": {
-        "zh": "机器学习基础",
-        "en": "Machine Learning"
-      },
-      "description": {
-        "zh": "从线性模型到优化方法，把直觉、推导与实现放在一起。",
-        "en": "Connecting intuition, mathematical foundations, and implementation."
-      },
-      "code": "ML / 01",
-      "status": "learning",
-      "source": "",
-      "demo": true
-    },
-    {
-      "slug": "linear-algebra",
-      "title": {
-        "zh": "线性代数",
-        "en": "Linear Algebra"
-      },
-      "description": {
-        "zh": "重新理解向量、线性映射与矩阵分解。",
-        "en": "Revisiting vectors, linear maps, and matrix decompositions."
-      },
-      "code": "MATH / 02",
-      "status": "reviewing",
-      "source": "",
-      "demo": true
-    }
-  ],
-  "publications": [
-    {
-      "title": "论文展示示例 / Publication placeholder",
-      "authors": [
-        {
-          "name": "Your name",
-          "isMe": true
-        },
-        {
-          "name": "Co-author"
-        }
-      ],
-      "venue": "会议或期刊待填写 · Venue pending",
-      "year": "2026",
-      "type": "preprint",
-      "status": "preprint",
-      "abstract": "此条目仅演示论文排版，不代表真实发表记录。Replace this entry with your paper, authors, venue, and abstract.",
-      "links": [],
-      "demo": true
-    }
-  ],
-  "projects": [
-    {
-      "slug": "project-example",
-      "title": {
-        "zh": "开源项目示例",
-        "en": "Open-source project placeholder"
-      },
-      "description": {
-        "zh": "在这里介绍项目解决的问题，以及你在其中的工作。",
-        "en": "Describe the problem this project addresses and your contribution."
-      },
-      "role": {
-        "zh": "贡献角色待填写",
-        "en": "Contribution to be added"
-      },
-      "url": "",
-      "demo": true
-    }
-  ],
+  "courses": [],
+  "publications": [],
+  "projects": [],
   "links": [
     {
       "title": "arXiv",
