@@ -40,7 +40,7 @@ export function escapeText(s = '') {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/([\\\x60*_[\]{}|])/g, '\\$1')
+    .replace(/([\\\x60*_[\]{}|$])/g, '\\$1')
     .replace(/^([>#\-+]|\d+\.)/gm, '\\$1')
 }
 export function richText(items = []) {

@@ -73,6 +73,10 @@ test('rich text escapes HTML and rejects executable links', () => {
   assert.throws(() => richText([{ ...rt('x')[0], href: 'javascript:alert(1)' }]), /protocol/)
   assert.throws(() => safeUrl('https://name:secret@example.com/'), /Credentials/)
 })
+test('literal dollar text stays text while native equations remain math', () => {
+  assert.equal(richText(rt('$x^2$ costs $5')), '\\$x^2\\$ costs \\$5')
+  assert.equal(richText([{ type: 'equation', equation: { expression: 'x^2' } }]), '$x^2$')
+})
 test('nested lists, code, math, tables and images render', async () => {
   const children = {
     list: [{ id: 'child', type: 'paragraph', paragraph: { rich_text: rt('nested') } }],
