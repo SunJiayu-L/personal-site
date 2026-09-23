@@ -11,6 +11,7 @@ import {
   type Lang
 } from './data'
 import Layout from './Layout.astro'
+import Mark from './Mark.astro'
 
 interface Props {
   lang: Lang
@@ -35,7 +36,7 @@ const posts = visibleEntries(entries, lang)
     </div>
     <div class='identity-block'>
       <div class='initial'>
-        {local(catalog.profile.name, lang).slice(0, 1)}
+        <Mark size={68} />
       </div><div class='name'>{local(catalog.profile.name, lang)}</div><small
         >{t(lang, '个人主页 · 学习笔记', 'Personal website · Learning notes')}</small
       ><small style='margin-top:12px'

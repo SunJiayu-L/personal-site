@@ -1,14 +1,9 @@
 ---
+import { base } from './data'
 interface Props {
   size?: number
 }
 const { size = 30 } = Astro.props
 ---
 
-<svg width={size} height={size} viewBox='0 0 32 32' fill='none' aria-hidden='true'
-  ><rect x='1' y='1' width='30' height='30' rx='8' fill='currentColor'></rect><path
-    d='M9 9h6l2 4h6v10h-6l-2-4H9V9Z'
-    stroke='var(--paper)'
-    stroke-width='1.5'></path><path d='M15 9v10m2-6v10' stroke='var(--paper)' stroke-width='1.5'
-  ></path></svg
->
+<img src={base + '/sujnrose.jpg'} width={size} height={size} alt='' aria-hidden='true' style='display:block;object-fit:contain;border-radius:8px;background:#fff;flex-shrink:0' />

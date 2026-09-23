@@ -306,8 +306,6 @@ ul {
   font-size: 2rem;
   width: 68px;
   height: 68px;
-  background: var(--blue-soft);
-  color: var(--blue);
   border-radius: 16px;
   display: grid;
   place-items: center;
