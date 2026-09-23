@@ -22,10 +22,10 @@ const {
   wide = false
 } = Astro.props
 const nav = [
+  ['Home', ''],
   ['Blog', 'blog'],
   ['Academic', 'academic'],
   ['Course', 'course'],
-  ['Links', 'links'],
   ['Friends', 'friends']
 ]
 const canonical = new URL(Astro.url.pathname, Astro.site)
@@ -71,7 +71,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
     <header class='site-header'>
       <div class='header-inner'>
         <a class='brand' href={url(lang)} aria-label={t(lang, '返回首页', 'Home')}
-          ><Mark /><span>Fieldnotes<span class='brand-dot'>.</span></span></a
+          ><Mark /><span>Sun</span></a
         >
         <nav id='main-nav' aria-label={t(lang, '主导航', 'Main navigation')}>
           {
@@ -157,7 +157,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
     </main>
     <footer class='site-footer'>
       <div>
-        <a class='footer-brand' href={url(lang)}>Fieldnotes.</a><span
+        <a class='footer-brand' href={url(lang)}>Sun</a><span
           >{
             t(lang, '在研究与生活之间，留下一些笔记。', 'Notes between research and everyday life.')
           }</span>
@@ -218,3 +218,4 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
     </script>
   </body>
 </html>
+
