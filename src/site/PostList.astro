@@ -1,0 +1,50 @@
+---
+import { categories, dateLabel, entryUrl, readMinutes, t, url, type Entry, type Lang } from './data'
+
+interface Props {
+  entries: Entry[]
+  lang: Lang
+}
+const { entries, lang } = Astro.props
+---
+
+{
+  entries.map((e) => (
+    <article class='post-row'>
+      <>
+        <div class='post-meta'>
+          <time datetime={e.data.date}>{dateLabel(e.data.date, lang)}</time>
+          {e.data.category && <a href={url(lang, 'blog/' + e.data.category)}>{categories.find((c) => c.slug === e.data.category)?.title}</a>}
+          <span>
+            {readMinutes(e.body)} {t(lang, '分钟阅读', 'min read')}
+          </span>
+          {e.data.demo && <span class='sample'>{t(lang, '示例', 'SAMPLE')}</span>}
+          {e.data.lang !== lang && (
+            <span class='sample'>{e.data.lang === 'zh' ? '中文原文' : 'English original'}</span>
+          )}
+        </div>
+        <h3>
+          <a href={entryUrl(e)}>{e.data.title}</a>
+        </h3>
+        <p>{e.data.description}</p>
+        <div class='tag-line'>
+          {e.data.tags.map((tag) => (
+            <a class='tag' href={url(lang, 'tags/' + encodeURIComponent(tag))}>
+              #{tag}
+            </a>
+          ))}
+        </div>
+      </>
+    </article>
+  ))
+}
+{
+  !entries.length && (
+    <div class='empty-state'>
+      <>
+        <h3>{t(lang, '还没有发布内容', 'Nothing published yet')}</h3>
+        <p>{t(lang, '新的笔记会出现在这里。', 'New notes will appear here.')}</p>
+      </>
+    </div>
+  )
+}

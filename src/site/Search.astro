@@ -1,0 +1,172 @@
+---
+import { catalog, entryUrl, local, t, url, visibleEntries, type Entry, type Lang } from './data'
+import Layout from './Layout.astro'
+
+interface Props {
+  lang: Lang
+  entries: Entry[]
+}
+const { lang, entries } = Astro.props
+const records = visibleEntries(entries, lang).map((e) => ({
+  title: e.data.title,
+  description: e.data.description,
+  body: e.body || '',
+  section: e.data.kind === 'note' ? 'Course' : 'Blog',
+  url: entryUrl(e)
+}))
+records.push({
+  title: 'Academic',
+  description: local(catalog.profile.about, lang),
+  body: JSON.stringify(catalog.publications) + ' ' + JSON.stringify(catalog.projects),
+  section: 'Academic',
+  url: url(lang, 'academic')
+})
+---
+
+<Layout
+  {lang}
+  title={t(lang, '搜索', 'Search')}
+  alternate={url(lang === 'zh' ? 'en' : 'zh', 'search')}
+>
+  <header class='page-intro'>
+    <div class='eyebrow'>FIND A NOTE</div><h1>{t(lang, '搜索', 'Search')}</h1><p>
+      {
+        t(
+          lang,
+          '搜索博客、课程笔记与学术工作。',
+          'Search blog posts, course notes, and academic work.'
+        )
+      }
+    </p>
+  </header>
+  <label for='search-input'>{t(lang, '关键词', 'Keywords')}</label><input
+    type='search'
+    id='search-input'
+    class='search-field'
+    placeholder={t(lang, '试试「梯度下降」或「research」', 'Try “gradient” or “research”')}
+    autocomplete='off'
+  />
+  <div
+    class='tabs'
+    id='search-filters'
+    role='group'
+    aria-label={t(lang, '搜索范围', 'Search scope')}
+  >
+    <button class='search-filter active' data-filter='all' aria-pressed='true'
+      >{t(lang, '全部', 'All')}</button
+    ><button class='search-filter' data-filter='Blog' aria-pressed='false'>Blog</button><button
+      class='search-filter'
+      data-filter='Course'
+      aria-pressed='false'>Course</button
+    ><button class='search-filter' data-filter='Academic' aria-pressed='false'>Academic</button>
+  </div>
+  <p class='search-status' id='search-status' role='status'>
+    {t(lang, '输入关键词开始搜索。', 'Enter a keyword to begin.')}
+  </p><div id='search-results'></div>
+  <script
+    is:inline
+    type='application/json'
+    id='search-data'
+    set:html={JSON.stringify(records).replace(/</g, '\\u003c')}
+  />
+  <script>
+    type RecordItem = {
+      title: string
+      description: string
+      body: string
+      section: string
+      url: string
+    }
+    const records = JSON.parse(
+      document.querySelector('#search-data')?.textContent || '[]'
+    ) as RecordItem[]
+    const input = document.querySelector<HTMLInputElement>('#search-input')!
+    const results = document.querySelector('#search-results')!
+    const status = document.querySelector('#search-status')!
+    const chinese = document.documentElement.lang === 'zh'
+    let filter = 'all',
+      requestId = 0
+    const normalize = (s: string) => s.normalize('NFKC').toLocaleLowerCase()
+    const moduleUrl = import.meta.env.BASE_URL.replace(/\/$/, '') + '/pagefind/pagefind.js'
+    let engine: Promise<any> | undefined
+    async function search() {
+      const current = ++requestId,
+        q = normalize(input.value.trim())
+      results.replaceChildren()
+      results.setAttribute('data-engine', 'text')
+      if (!q) {
+        status.textContent = chinese ? '输入关键词开始搜索。' : 'Enter a keyword to begin.'
+        return
+      }
+      const terms = q.split(/\s+/)
+      let found = records.filter((r) =>
+        terms.every((term) =>
+          normalize(r.title + ' ' + r.description + ' ' + r.body).includes(term)
+        )
+      )
+      if (import.meta.env.PROD) {
+        try {
+          engine ??= import(/* @vite-ignore */ moduleUrl)
+          const pf = await engine
+          await pf.options({ baseUrl: import.meta.env.BASE_URL })
+          const response = await pf.search(q)
+          if (current === requestId) results.setAttribute('data-engine', 'pagefind')
+          const indexed = await Promise.all(response.results.slice(0, 50).map((r: any) => r.data()))
+          const matched = indexed
+            .map((r: any) =>
+              records.find(
+                (record) =>
+                  new URL(record.url, location.origin).pathname ===
+                  new URL(r.url, location.origin).pathname
+              )
+            )
+            .filter(Boolean) as RecordItem[]
+          found = [...new Map([...matched, ...found].map((r) => [r.url, r])).values()]
+        } catch {
+          /* The local text index remains available when the search bundle cannot load. */
+        }
+      }
+      if (current !== requestId) return
+      found = found.filter((r) => filter === 'all' || r.section === filter)
+      status.textContent = chinese ? '找到 ' + found.length + ' 个结果' : found.length + ' results'
+      for (const r of found) {
+        const a = document.createElement('a')
+        a.href = r.url
+        a.className = 'search-result'
+        const s = document.createElement('small')
+        s.textContent = r.section
+        const h = document.createElement('h2')
+        h.textContent = r.title
+        const p = document.createElement('p')
+        p.textContent = r.description
+        a.append(s, h, p)
+        results.append(a)
+      }
+    }
+    input.addEventListener('input', search)
+    document.querySelectorAll<HTMLButtonElement>('.search-filter').forEach((b) =>
+      b.addEventListener('click', () => {
+        filter = b.dataset.filter || 'all'
+        document.querySelectorAll('.search-filter').forEach((el) => {
+          el.classList.toggle('active', el === b)
+          el.setAttribute('aria-pressed', String(el === b))
+        })
+        void search()
+      })
+    )
+  </script>
+  <style>
+    .search-filter {
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: none;
+      padding: 8px 0;
+      color: var(--sub);
+      font-size: 0.875rem;
+    }
+    .search-filter.active {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+  </style>
+</Layout>

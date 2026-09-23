@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content'
+
+import Article from '../../site/Article.astro'
+import { catalog, categories, entryPath, languages, type Entry, type Lang } from '../../site/data'
+import Listing from '../../site/Listing.astro'
+import Search from '../../site/Search.astro'
+
+export async function getStaticPaths() {
+  const entries = (await getCollection('entries')).filter((e) => e.data.published)
+  const tags = [...new Set(entries.flatMap((e) => e.data.tags))]
+  const series = [...new Set(entries.map((e) => e.data.series).filter(Boolean))] as string[]
+  return languages.flatMap((lang) => {
+    const paths = [
+      'blog',
+      'academic',
+      'course',
+      'links',
+      'friends',
+      'archives',
+      'search',
+      ...categories.map((c) => 'blog/' + c.slug),
+      ...catalog.courses.map((c) => 'course/' + c.slug),
+      ...tags.map((t) => 'tags/' + t),
+      ...series.map((s) => 'series/' + s)
+    ]
+    return [
+      ...paths.map((path) => ({ params: { lang, path }, props: { lang, path, entries } })),
+      ...entries
+        .filter((e) => e.data.lang === lang)
+        .map((entry) => ({
+          params: { lang, path: entryPath(entry) },
+          props: { lang, path: entryPath(entry), entry, entries }
+        }))
+    ]
+  })
+}
+const { lang, path, entries } = Astro.props
+const entry = ('entry' in Astro.props ? Astro.props.entry : undefined) as Entry | undefined
+---
+
+{
+  entry ? (
+    <Article lang={lang as Lang} {entry} {entries} />
+  ) : path === 'search' ? (
+    <Search lang={lang as Lang} {entries} />
+  ) : (
+    <Listing lang={lang as Lang} {path} {entries} />
+  )
+}

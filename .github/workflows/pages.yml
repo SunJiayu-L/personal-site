@@ -1,0 +1,79 @@
+name: Sync Notion and deploy Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    if: vars.SITE_READY == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    env:
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      NOTION_BLOG_SOURCE: ${{ vars.NOTION_BLOG_SOURCE }}
+      NOTION_COURSES_SOURCE: ${{ vars.NOTION_COURSES_SOURCE }}
+      NOTION_NOTES_SOURCE: ${{ vars.NOTION_NOTES_SOURCE }}
+      NOTION_PUBLICATIONS_SOURCE: ${{ vars.NOTION_PUBLICATIONS_SOURCE }}
+      NOTION_PROJECTS_SOURCE: ${{ vars.NOTION_PROJECTS_SOURCE }}
+      NOTION_LINKS_SOURCE: ${{ vars.NOTION_LINKS_SOURCE }}
+      NOTION_FRIENDS_SOURCE: ${{ vars.NOTION_FRIENDS_SOURCE }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '11.19.0'
+      - run: pnpm install --frozen-lockfile
+      - name: Resolve Pages URL
+        shell: bash
+        env:
+          CONFIG_SITE_URL: ${{ vars.SITE_URL }}
+          CONFIG_BASE_PATH: ${{ vars.BASE_PATH }}
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const [owner,repo]=process.env.GITHUB_REPOSITORY.split('/');
+          const site=process.env.CONFIG_SITE_URL||'https://'+owner.toLowerCase()+'.github.io';
+          const base=process.env.CONFIG_SITE_URL?(process.env.CONFIG_BASE_PATH||''):(repo.toLowerCase()===owner.toLowerCase()+'.github.io'?'':'/'+repo);
+          fs.appendFileSync(process.env.GITHUB_ENV,'SITE_URL='+site+'\nBASE_PATH='+base+'\n');
+          NODE
+      - name: Test content handling
+        run: pnpm test
+      - name: Read published Notion content
+        run: pnpm sync:notion
+      - name: Refresh friend feeds
+        run: pnpm sync:friends
+      - name: Refresh public GitHub project metadata
+        run: node scripts/sync-github.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Validate real content and build
+        run: pnpm build:production
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish completed build
+        id: deployment
+        uses: actions/deploy-pages@v4

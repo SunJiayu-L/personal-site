@@ -1,0 +1,6 @@
+This website is derived from Axi404/Axi-Theme (https://github.com/Axi404/Axi-Theme), Apache License 2.0.
+Retained upstream components: PublicationCard, PublicationSection, Icon, SimpleIcon; icon definitions; Tailwind helpers/theme; Shiki transformers.
+Modified on 2026-09-23: site-specific layouts, five-section navigation, bilingual content routes, course notebook, content synchronization and deployment.
+Original author articles, personal profile, tracking identifiers and third-party artwork are not included in the published site.
+See LICENSE for the original license.
+Upstream snapshot: c6470e7.

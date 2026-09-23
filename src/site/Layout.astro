@@ -1,0 +1,220 @@
+---
+import './site.css'
+import 'katex/dist/katex.min.css'
+
+import { base, catalog, local, t, url, type Lang } from './data'
+import Mark from './Mark.astro'
+
+interface Props {
+  lang: Lang
+  title: string
+  description?: string
+  section?: string
+  alternate?: string
+  wide?: boolean
+}
+const {
+  lang,
+  title,
+  description = local(catalog.profile.bio, lang),
+  section = '',
+  alternate,
+  wide = false
+} = Astro.props
+const nav = [
+  ['Blog', 'blog'],
+  ['Academic', 'academic'],
+  ['Course', 'course'],
+  ['Links', 'links'],
+  ['Friends', 'friends']
+]
+const canonical = new URL(Astro.url.pathname, Astro.site)
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset='utf-8' /><meta name='viewport' content='width=device-width,initial-scale=1' />
+    <title>{title} · {local(catalog.profile.name, lang)}</title>
+    <meta name='description' content={description} /><meta
+      name='color-scheme'
+      content='light dark'
+    />
+    {catalog.demo && <meta name='robots' content='noindex,nofollow' />}
+    <link rel='canonical' href={canonical} /><link
+      rel='icon'
+      type='image/svg+xml'
+      href={base + '/favicon.svg'}
+    />
+    <link rel='alternate' type='application/rss+xml' title='RSS' href={base + '/rss.xml'} />
+    {
+      alternate && (
+        <link
+          rel='alternate'
+          hreflang={lang === 'zh' ? 'en' : 'zh'}
+          href={new URL(alternate, Astro.site)}
+        />
+      )
+    }
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('theme')
+        document.documentElement.classList.toggle(
+          'dark',
+          theme === 'dark' || (!theme && matchMedia('(prefers-color-scheme: dark)').matches)
+        )
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <a class='skip-link' href='#main'>{t(lang, '跳至正文', 'Skip to content')}</a>
+    <header class='site-header'>
+      <div class='header-inner'>
+        <a class='brand' href={url(lang)} aria-label={t(lang, '返回首页', 'Home')}
+          ><Mark /><span>Fieldnotes<span class='brand-dot'>.</span></span></a
+        >
+        <nav id='main-nav' aria-label={t(lang, '主导航', 'Main navigation')}>
+          {
+            nav.map(([label, path]) => (
+              <a
+                href={url(lang, path)}
+                class:list={{ active: section === path }}
+                aria-current={section === path ? 'page' : undefined}
+              >
+                {label}
+              </a>
+            ))
+          }
+        </nav>
+        <div class='header-tools'>
+          <a class='icon-button' href={url(lang, 'search')} aria-label={t(lang, '搜索', 'Search')}
+            ><svg
+              viewBox='0 0 24 24'
+              width='20'
+              height='20'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='1.6'
+              aria-hidden='true'
+              ><circle cx='10.5' cy='10.5' r='6.5'></circle><path d='m16 16 4 4'></path></svg
+            ></a
+          >
+          <a
+            class='language-button'
+            href={alternate || url(lang === 'zh' ? 'en' : 'zh', section)}
+            aria-label={t(lang, 'Switch to English', '切换到中文')}
+            >{lang === 'zh' ? 'EN' : '中文'}</a
+          >
+          <button
+            class='icon-button'
+            id='theme-toggle'
+            aria-label={t(lang, '切换深浅色', 'Toggle color theme')}
+            aria-pressed='false'
+            ><svg
+              viewBox='0 0 24 24'
+              width='19'
+              height='19'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='1.6'
+              aria-hidden='true'
+              ><path d='M20 14A8.2 8.2 0 0 1 10 4a8.3 8.3 0 1 0 10 10Z'></path></svg
+            ></button
+          >
+          <button
+            class='icon-button mobile-menu'
+            id='menu-toggle'
+            aria-controls='main-nav'
+            aria-expanded='false'
+            aria-label={t(lang, '打开导航', 'Open navigation')}
+            ><svg
+              viewBox='0 0 24 24'
+              width='21'
+              height='21'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='1.6'
+              aria-hidden='true'><path d='M4 7h16M4 12h16M4 17h16'></path></svg
+            ></button
+          >
+        </div>
+      </div>
+    </header>
+    <main id='main' class:list={['main-shell', { wide }]} tabindex='-1'>
+      {
+        catalog.demo && (
+          <div class='preview-label' data-pagefind-ignore>
+            <span class='small-square' />
+            {t(
+              lang,
+              '设计预览 · 个人资料与内容为示例',
+              'DESIGN PREVIEW · Sample profile & content'
+            )}
+          </div>
+        )
+      }
+      <slot />
+    </main>
+    <footer class='site-footer'>
+      <div>
+        <a class='footer-brand' href={url(lang)}>Fieldnotes.</a><span
+          >{
+            t(lang, '在研究与生活之间，留下一些笔记。', 'Notes between research and everyday life.')
+          }</span>
+      </div><div class='footer-bottom'>
+        <span>© {new Date().getFullYear()} {local(catalog.profile.name, lang)}</span><span
+          ><a href={base + '/rss.xml'}>RSS</a><span class='sep'>/</span><a
+            href='https://github.com/Axi404/Axi-Theme'
+            target='_blank'
+            rel='noopener noreferrer'>Astro · Axi-Theme</a
+          ></span>
+      </div>
+    </footer>
+    <button id='back-top' class='back-top' aria-label={t(lang, '返回顶部', 'Back to top')} hidden
+      >↑</button
+    >
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>('#theme-toggle')
+      const update = () =>
+        toggle?.setAttribute(
+          'aria-pressed',
+          String(document.documentElement.classList.contains('dark'))
+        )
+      update()
+      toggle?.addEventListener('click', () => {
+        const dark = document.documentElement.classList.toggle('dark')
+        try {
+          localStorage.setItem('theme', dark ? 'dark' : 'light')
+        } catch {}
+        update()
+      })
+      const menu = document.querySelector<HTMLButtonElement>('#menu-toggle')
+      const nav = document.querySelector('#main-nav')
+      menu?.addEventListener('click', () => {
+        const open = menu.getAttribute('aria-expanded') !== 'true'
+        menu.setAttribute('aria-expanded', String(open))
+        nav?.classList.toggle('is-open', open)
+      })
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          menu?.setAttribute('aria-expanded', 'false')
+          nav?.classList.remove('is-open')
+        }
+      })
+      const topButton = document.querySelector<HTMLButtonElement>('#back-top')
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (topButton) topButton.hidden = window.scrollY < 500
+        },
+        { passive: true }
+      )
+      topButton?.addEventListener('click', () =>
+        window.scrollTo({
+          top: 0,
+          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
+        })
+      )
+    </script>
+  </body>
+</html>

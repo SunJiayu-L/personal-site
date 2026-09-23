@@ -1,0 +1,141 @@
+{
+  "demo": true,
+  "profile": {
+    "name": {
+      "zh": "孙嘉渝",
+      "en": "Jiayu Sun"
+    },
+    "title": {
+      "zh": "研究、构建，然后记录。",
+      "en": "Research. Build. Reflect."
+    },
+    "bio": {
+      "zh": "这里是我的个人知识空间，收集研究中的问题、技术实践与日常思考，也记录那些值得反复阅读的课程笔记。",
+      "en": "A personal space for research questions, things I build, everyday reflections, and course notes worth revisiting."
+    },
+    "about": {
+      "zh": "在这里填写你的研究方向、学习经历与目前关注的问题。个人资料尚未填写，以下内容仅用于预览页面布局。",
+      "en": "Add your research interests, education, and the questions you are currently exploring here. Personal details have not been added; this is a design preview."
+    },
+    "github": "https://github.com/SunJiayu-L",
+    "email": "",
+    "scholar": "",
+    "cv": ""
+  },
+  "courses": [
+    {
+      "slug": "machine-learning",
+      "title": {
+        "zh": "机器学习基础",
+        "en": "Machine Learning"
+      },
+      "description": {
+        "zh": "从线性模型到优化方法，把直觉、推导与实现放在一起。",
+        "en": "Connecting intuition, mathematical foundations, and implementation."
+      },
+      "code": "ML / 01",
+      "status": "learning",
+      "source": "",
+      "demo": true
+    },
+    {
+      "slug": "linear-algebra",
+      "title": {
+        "zh": "线性代数",
+        "en": "Linear Algebra"
+      },
+      "description": {
+        "zh": "重新理解向量、线性映射与矩阵分解。",
+        "en": "Revisiting vectors, linear maps, and matrix decompositions."
+      },
+      "code": "MATH / 02",
+      "status": "reviewing",
+      "source": "",
+      "demo": true
+    }
+  ],
+  "publications": [
+    {
+      "title": "论文展示示例 / Publication placeholder",
+      "authors": [
+        {
+          "name": "Your name",
+          "isMe": true
+        },
+        {
+          "name": "Co-author"
+        }
+      ],
+      "venue": "会议或期刊待填写 · Venue pending",
+      "year": "2026",
+      "type": "preprint",
+      "status": "preprint",
+      "abstract": "此条目仅演示论文排版，不代表真实发表记录。Replace this entry with your paper, authors, venue, and abstract.",
+      "links": [],
+      "demo": true
+    }
+  ],
+  "projects": [
+    {
+      "slug": "project-example",
+      "title": {
+        "zh": "开源项目示例",
+        "en": "Open-source project placeholder"
+      },
+      "description": {
+        "zh": "在这里介绍项目解决的问题，以及你在其中的工作。",
+        "en": "Describe the problem this project addresses and your contribution."
+      },
+      "role": {
+        "zh": "贡献角色待填写",
+        "en": "Contribution to be added"
+      },
+      "url": "",
+      "demo": true
+    }
+  ],
+  "links": [
+    {
+      "title": "arXiv",
+      "description": {
+        "zh": "浏览研究论文与最新预印本。",
+        "en": "Research papers and recent preprints."
+      },
+      "url": "https://arxiv.org/",
+      "category": "Research",
+      "demo": false
+    },
+    {
+      "title": "MIT OpenCourseWare",
+      "description": {
+        "zh": "开放课程、讲义和习题。",
+        "en": "Open courses, lecture notes, and assignments."
+      },
+      "url": "https://ocw.mit.edu/",
+      "category": "Learning",
+      "demo": false
+    },
+    {
+      "title": "MDN Web Docs",
+      "description": {
+        "zh": "Web 技术文档与实践参考。",
+        "en": "Documentation and practical references for the web."
+      },
+      "url": "https://developer.mozilla.org/",
+      "category": "Tools",
+      "demo": false
+    },
+    {
+      "title": "GitHub",
+      "description": {
+        "zh": "探索开源项目与开发工具。",
+        "en": "Explore open-source projects and developer tools."
+      },
+      "url": "https://github.com/",
+      "category": "Tools",
+      "demo": false
+    }
+  ],
+  "friends": [],
+  "friendFeed": []
+}

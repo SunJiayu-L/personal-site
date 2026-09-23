@@ -1,0 +1,248 @@
+---
+import { render } from 'astro:content'
+
+import {
+  catalog,
+  dateLabel,
+  entryUrl,
+  local,
+  readMinutes,
+  t,
+  url,
+  visibleEntries,
+  type Entry,
+  type Lang
+} from './data'
+import Layout from './Layout.astro'
+
+interface Props {
+  lang: Lang
+  entry: Entry
+  entries: Entry[]
+}
+const { lang, entry, entries } = Astro.props
+const { Content, headings } = await render(entry)
+const isNote = entry.data.kind === 'note'
+const course = catalog.courses.find((c) => c.slug === entry.data.course)
+const siblings = visibleEntries(entries, lang)
+  .filter((e) => (isNote ? e.data.course === entry.data.course : e.data.kind === 'blog'))
+  .sort((a, b) => (isNote ? a.data.order - b.data.order : b.data.date.localeCompare(a.data.date)))
+const index = siblings.findIndex((e) => e.id === entry.id)
+const previous = siblings[index - 1],
+  next = siblings[index + 1]
+const translation = entry.data.translationKey
+  ? entries.find(
+      (e) =>
+        e.data.published &&
+        e.data.lang !== lang &&
+        e.data.translationKey === entry.data.translationKey
+    )
+  : undefined
+const alternate = translation
+  ? entryUrl(translation)
+  : url(lang === 'zh' ? 'en' : 'zh', isNote ? 'course/' + entry.data.course : 'blog')
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3)
+---
+
+<Layout
+  {lang}
+  title={entry.data.title}
+  description={entry.data.description}
+  section={isNote ? 'course' : 'blog'}
+  {alternate}
+  wide={isNote}
+>
+  <div class='breadcrumb'>
+    <a href={url(lang, isNote ? 'course' : 'blog')}>{isNote ? 'Course' : 'Blog'}</a><span>/</span>{
+      course && (
+        <>
+          <>
+            <a href={url(lang, 'course/' + course.slug)}>{local(course.title, lang)}</a>
+            <span>/</span>
+          </>
+        </>
+      )
+    }<span>{entry.data.title}</span>
+  </div>
+  <div class:list={['article-grid', { 'with-chapters': isNote }]}>
+    {
+      isNote && (
+        <aside class='sticky-nav chapter-nav'>
+          <details id='chapter-list' open>
+            <>
+              <summary>{t(lang, '课程章节', 'Course chapters')}</summary>
+              <h3>{course && local(course.title, lang)}</h3>
+              <nav aria-label={t(lang, '章节导航', 'Chapters')}>
+                {siblings.map((e, i) => (
+                  <a
+                    href={entryUrl(e)}
+                    class:list={{ current: e.id === entry.id }}
+                    aria-current={e.id === entry.id ? 'page' : undefined}
+                  >
+                    <span class='chapter-index'>{String(i + 1).padStart(2, '0')}</span>
+                    {e.data.title}
+                  </a>
+                ))}
+              </nav>
+            </>
+          </details>
+        </aside>
+      )
+    }
+    <article
+      class='article'
+      data-pagefind-body
+      data-pagefind-meta={'section:' + (isNote ? 'Course' : 'Blog')}
+    >
+      <header class='article-header'>
+        <div class='post-meta'>
+          <span class='category'>{isNote ? course?.code : entry.data.category}</span><time
+            datetime={entry.data.date}>{dateLabel(entry.data.date, lang)}</time
+          ><span>{readMinutes(entry.body)} {t(lang, '分钟阅读', 'min read')}</span>{
+            entry.data.demo && <span class='sample'>{t(lang, '示例笔记', 'SAMPLE NOTE')}</span>
+          }
+        </div><h1 data-pagefind-meta='title'>{entry.data.title}</h1><p>
+          {entry.data.description}
+        </p><div class='tag-line'>
+          {
+            entry.data.tags.map((tag) => (
+              <a class='tag' href={url(lang, 'tags/' + encodeURIComponent(tag))}>
+                #{tag}
+              </a>
+            ))
+          }
+        </div>{
+          !translation && (
+            <p class='note-count'>
+              {t(
+                lang,
+                '此篇暂无英文译文，语言切换将返回英文目录。',
+                'No Chinese translation yet. Language switching opens the Chinese index.'
+              )}
+            </p>
+          )
+        }
+      </header>
+      <details class='mobile-toc'>
+        <summary>{t(lang, '本页目录', 'On this page')}</summary><nav>
+          {toc.map((h) => <a href={'#' + h.slug}>{h.text}</a>)}
+        </nav>
+      </details>
+      <div class='prose' id='article-body'><Content /></div>
+      {
+        entry.data.series && (
+          <div class='series-note'>
+            <a href={url(lang, 'series/' + encodeURIComponent(entry.data.series))}>
+              {t(lang, '所属系列', 'Series')} · {entry.data.series} ↗
+            </a>
+          </div>
+        )
+      }
+      <nav
+        class='prev-next'
+        aria-label={t(lang, '相邻笔记', 'Adjacent notes')}
+        data-pagefind-ignore
+      >
+        <div>
+          {
+            previous && (
+              <a href={entryUrl(previous)}>
+                <small>
+                  ←{' '}
+                  {t(
+                    lang,
+                    isNote ? '上一节' : '上一篇',
+                    isNote ? 'Previous lesson' : 'Previous post'
+                  )}
+                </small>
+                {previous.data.title}
+              </a>
+            )
+          }
+        </div><div style='text-align:right'>
+          {
+            next && (
+              <a href={entryUrl(next)}>
+                <small>
+                  {t(lang, isNote ? '下一节' : '下一篇', isNote ? 'Next lesson' : 'Next post')} →
+                </small>
+                {next.data.title}
+              </a>
+            )
+          }
+        </div>
+      </nav>
+    </article>
+    <aside class='sticky-nav toc' aria-label={t(lang, '本页目录', 'On this page')}>
+      <div class='aside-label'>ON THIS PAGE</div>{
+        toc.map((h) => (
+          <a href={'#' + h.slug} class:list={{ sub: h.depth === 3 }}>
+            {h.text}
+          </a>
+        ))
+      }<div class='reading-progress'><span id='progress-bar'></span></div><div
+        class='progress-caption'
+      >
+        <span id='progress-text'>0</span>% {t(lang, '已阅读', 'read')}
+      </div>
+    </aside>
+  </div>
+  <script>
+    const chinese = document.documentElement.lang === 'zh'
+    document.querySelectorAll<HTMLPreElement>('.prose pre').forEach((pre) => {
+      const code = pre.querySelector('code')?.textContent || ''
+      const button = document.createElement('button')
+      button.className = 'code-copy'
+      button.type = 'button'
+      button.textContent = chinese ? '复制代码' : 'Copy code'
+      pre.prepend(button)
+      button.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(code)
+          button.textContent = chinese ? '已复制' : 'Copied'
+        } catch {
+          button.textContent = chinese ? '请手动复制' : 'Copy manually'
+        }
+        setTimeout(() => (button.textContent = chinese ? '复制代码' : 'Copy code'), 1800)
+      })
+    })
+    const chapterList = document.querySelector<HTMLDetailsElement>('#chapter-list')
+    if (chapterList && matchMedia('(max-width: 760px)').matches) chapterList.open = false
+    const article = document.querySelector<HTMLElement>('#article-body')
+    const progress = () => {
+      if (!article) return
+      const r = article.getBoundingClientRect()
+      const total = r.height - window.innerHeight + 110
+      const value = Math.round(
+        Math.min(
+          100,
+          Math.max(
+            0,
+            total <= 0 ? (r.bottom <= window.innerHeight ? 100 : 0) : ((110 - r.top) / total) * 100
+          )
+        )
+      )
+      const bar = document.querySelector<HTMLElement>('#progress-bar')
+      if (bar) bar.style.width = value + '%'
+      const text = document.querySelector('#progress-text')
+      if (text) text.textContent = String(value)
+    }
+    addEventListener('scroll', progress, { passive: true })
+    progress()
+    const observer = new IntersectionObserver(
+      (items) => {
+        for (const item of items) {
+          if (item.isIntersecting) {
+            document
+              .querySelectorAll('.toc a')
+              .forEach((a) =>
+                a.classList.toggle('current', a.getAttribute('href') === '#' + item.target.id)
+              )
+          }
+        }
+      },
+      { rootMargin: '-100px 0px -65% 0px' }
+    )
+    document.querySelectorAll('.prose h2,.prose h3').forEach((h) => observer.observe(h))
+  </script>
+</Layout>

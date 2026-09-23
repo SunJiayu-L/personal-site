@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content'
+
+import { languages } from '../../site/data'
+import Home from '../../site/Home.astro'
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang }, props: { lang } }))
+}
+const { lang } = Astro.props
+const entries = await getCollection('entries')
+---
+
+<Home {lang} {entries} />

@@ -1,0 +1,293 @@
+{
+  "courses": {
+    "Title": {
+      "title": {}
+    },
+    "Published": {
+      "checkbox": {}
+    },
+    "Title EN": {
+      "rich_text": {}
+    },
+    "Description": {
+      "rich_text": {}
+    },
+    "Description EN": {
+      "rich_text": {}
+    },
+    "Slug": {
+      "rich_text": {}
+    },
+    "Code": {
+      "rich_text": {}
+    },
+    "Status": {
+      "select": {
+        "options": [
+          {
+            "name": "learning"
+          },
+          {
+            "name": "reviewing"
+          },
+          {
+            "name": "completed"
+          }
+        ]
+      }
+    },
+    "Source": {
+      "url": {}
+    }
+  },
+  "blog": {
+    "Title": {
+      "title": {}
+    },
+    "Published": {
+      "checkbox": {}
+    },
+    "Slug": {
+      "rich_text": {}
+    },
+    "Language": {
+      "select": {
+        "options": [
+          {
+            "name": "zh"
+          },
+          {
+            "name": "en"
+          }
+        ]
+      }
+    },
+    "Description": {
+      "rich_text": {}
+    },
+    "Date": {
+      "date": {}
+    },
+    "Tags": {
+      "multi_select": {}
+    },
+    "TranslationKey": {
+      "rich_text": {}
+    },
+    "Category": {
+      "select": {
+        "options": [
+          {
+            "name": "research"
+          },
+          {
+            "name": "technical"
+          },
+          {
+            "name": "daily-life"
+          }
+        ]
+      }
+    },
+    "Series": {
+      "rich_text": {}
+    }
+  },
+  "notes": {
+    "Title": {
+      "title": {}
+    },
+    "Published": {
+      "checkbox": {}
+    },
+    "Slug": {
+      "rich_text": {}
+    },
+    "Language": {
+      "select": {
+        "options": [
+          {
+            "name": "zh"
+          },
+          {
+            "name": "en"
+          }
+        ]
+      }
+    },
+    "Description": {
+      "rich_text": {}
+    },
+    "Date": {
+      "date": {}
+    },
+    "Tags": {
+      "multi_select": {}
+    },
+    "TranslationKey": {
+      "rich_text": {}
+    },
+    "Order": {
+      "number": {
+        "format": "number"
+      }
+    },
+    "Course": {
+      "relation": {
+        "data_source_id": "COURSES_DATA_SOURCE_ID",
+        "single_property": {}
+      }
+    }
+  },
+  "publications": {
+    "Title": {
+      "title": {}
+    },
+    "Published": {
+      "checkbox": {}
+    },
+    "Authors": {
+      "rich_text": {}
+    },
+    "Venue": {
+      "rich_text": {}
+    },
+    "Year": {
+      "number": {
+        "format": "number"
+      }
+    },
+    "Type": {
+      "select": {
+        "options": [
+          {
+            "name": "conference"
+          },
+          {
+            "name": "journal"
+          },
+          {
+            "name": "workshop"
+          },
+          {
+            "name": "preprint"
+          }
+        ]
+      }
+    },
+    "Status": {
+      "select": {
+        "options": [
+          {
+            "name": "published"
+          },
+          {
+            "name": "accepted"
+          },
+          {
+            "name": "under-review"
+          },
+          {
+            "name": "preprint"
+          }
+        ]
+      }
+    },
+    "Abstract": {
+      "rich_text": {}
+    },
+    "Links": {
+      "rich_text": {}
+    }
+  },
+  "projects": {
+    "Title": {
+      "title": {}
+    },
+    "Published": {
+      "checkbox": {}
+    },
+    "Title EN": {
+      "rich_text": {}
+    },
+    "Description": {
+      "rich_text": {}
+    },
+    "Description EN": {
+      "rich_text": {}
+    },
+    "Slug": {
+      "rich_text": {}
+    },
+    "Role": {
+      "rich_text": {}
+    },
+    "Role EN": {
+      "rich_text": {}
+    },
+    "URL": {
+      "url": {}
+    }
+  },
+  "links": {
+    "Title": {
+      "title": {}
+    },
+    "Published": {
+      "checkbox": {}
+    },
+    "Title EN": {
+      "rich_text": {}
+    },
+    "Description": {
+      "rich_text": {}
+    },
+    "Description EN": {
+      "rich_text": {}
+    },
+    "URL": {
+      "url": {}
+    },
+    "Category": {
+      "select": {
+        "options": [
+          {
+            "name": "Research"
+          },
+          {
+            "name": "Learning"
+          },
+          {
+            "name": "Tools"
+          }
+        ]
+      }
+    }
+  },
+  "friends": {
+    "Title": {
+      "title": {}
+    },
+    "Published": {
+      "checkbox": {}
+    },
+    "Title EN": {
+      "rich_text": {}
+    },
+    "Description": {
+      "rich_text": {}
+    },
+    "Description EN": {
+      "rich_text": {}
+    },
+    "URL": {
+      "url": {}
+    },
+    "Avatar": {
+      "url": {}
+    },
+    "RSS": {
+      "url": {}
+    }
+  }
+}
