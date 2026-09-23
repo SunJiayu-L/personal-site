@@ -10,12 +10,12 @@
       "en": "Research. Build. Reflect."
     },
     "bio": {
-      "zh": "这里是我的个人知识空间，收集研究中的问题、技术实践与日常思考，也记录那些值得反复阅读的课程笔记。",
-      "en": "A personal space for research questions, things I build, everyday reflections, and course notes worth revisiting."
+      "zh": "我是孙嘉渝（Jiayu Sun），电子科技大学软件工程专业本科生，关注具身智能与强化学习。目前主要探索视觉—语言—动作（VLA）模型的多任务强化学习与策略融合，也曾参与基于 IsaacLab 和 Unitree G1 的仿真到真实机器人流程搭建。希望通过这个网站记录研究思考、技术实践、课程笔记与日常生活。",
+      "en": "I'm Jiayu Sun, an undergraduate studying Software Engineering at the University of Electronic Science and Technology of China (UESTC). My interests lie in embodied AI and reinforcement learning. I currently explore multi-task reinforcement learning and policy merging for vision-language-action (VLA) models, and have worked on a sim-to-real robotics pipeline using IsaacLab and Unitree G1. Here, I share research reflections, technical projects, course notes, and moments from everyday life."
     },
     "about": {
-      "zh": "在这里填写你的研究方向、学习经历与目前关注的问题。个人资料尚未填写，以下内容仅用于预览页面布局。",
-      "en": "Add your research interests, education, and the questions you are currently exploring here. Personal details have not been added; this is a design preview."
+      "zh": "我是孙嘉渝（Jiayu Sun），电子科技大学软件工程专业本科生，关注具身智能与强化学习。目前主要探索视觉—语言—动作（VLA）模型的多任务强化学习与策略融合，也曾参与基于 IsaacLab 和 Unitree G1 的仿真到真实机器人流程搭建。希望通过这个网站记录研究思考、技术实践、课程笔记与日常生活。",
+      "en": "I'm Jiayu Sun, an undergraduate studying Software Engineering at the University of Electronic Science and Technology of China (UESTC). My interests lie in embodied AI and reinforcement learning. I currently explore multi-task reinforcement learning and policy merging for vision-language-action (VLA) models, and have worked on a sim-to-real robotics pipeline using IsaacLab and Unitree G1. Here, I share research reflections, technical projects, course notes, and moments from everyday life."
     },
     "github": "https://github.com/SunJiayu-L",
     "email": "",
