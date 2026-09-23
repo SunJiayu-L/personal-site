@@ -35,7 +35,7 @@ const posts = visibleEntries(entries, lang)
     </div>
     <div class='identity-block'>
       <div class='initial'>
-        {catalog.demo ? 'N' : local(catalog.profile.name, lang).slice(0, 1)}
+        {local(catalog.profile.name, lang).slice(0, 1)}
       </div><div class='name'>{local(catalog.profile.name, lang)}</div><small
         >{t(lang, '个人主页 · 学习笔记', 'Personal website · Learning notes')}</small
       ><small style='margin-top:12px'
@@ -107,13 +107,7 @@ const posts = visibleEntries(entries, lang)
     </div><div class='research-summary'>
       <p>
         {
-          catalog.demo
-            ? t(
-                lang,
-                '这里将展示你的代表性论文与开源工作。目前尚未添加真实学术资料。',
-                'Selected publications and open-source work will appear here. Academic details have not been added yet.'
-              )
-            : local(catalog.profile.about, lang)
+          local(catalog.profile.about, lang)
         }
       </p>
     </div>
