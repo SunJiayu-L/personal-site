@@ -19,14 +19,42 @@ export interface FeedItem {
   date: string
   friend: string
 }
-export const catalog = raw as Omit<typeof raw, 'friends' | 'friendFeed' | 'projects'> & {
+export interface Course {
+  slug: string
+  title: Localized
+  description: Localized
+  code: string
+  status: string
+  source: string
+  demo?: boolean
+}
+export interface Project {
+  slug: string
+  title: Localized
+  description: Localized
+  role: Localized
+  url: string
+  demo?: boolean
+  github?: { stars: number; language: string; description: string }
+}
+export interface Publication {
+  title: string
+  authors: Array<{ name: string; isMe?: boolean; isEqual?: boolean; isCoreContributor?: boolean; role?: 'corresponding' | 'project-leader'; homepage?: string }>
+  venue: string
+  year: string
+  type: 'conference' | 'journal' | 'workshop' | 'preprint'
+  status: 'published' | 'accepted' | 'under-review' | 'preprint'
+  abstract?: string
+  links: Array<{ type: string; href: string }>
+  demo?: boolean
+}
+export const catalog = raw as Omit<typeof raw, 'friends' | 'friendFeed' | 'projects' | 'courses' | 'publications' | 'links'> & {
   friends: Friend[]
   friendFeed: FeedItem[]
-  projects: Array<
-    (typeof raw.projects)[number] & {
-      github?: { stars: number; language: string; description: string }
-    }
-  >
+  projects: Project[]
+  courses: Course[]
+  publications: Publication[]
+  links: Array<{ title: string; description: Localized; url: string; category: string; demo?: boolean }>
 }
 export const languages: Lang[] = ['zh', 'en']
 export const categories = [
@@ -69,3 +97,4 @@ export const visibleEntries = (entries: Entry[], lang: Lang) => {
     )
   ].sort((a, b) => b.data.date.localeCompare(a.data.date))
 }
+
