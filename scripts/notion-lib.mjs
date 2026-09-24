@@ -318,7 +318,7 @@ export function validateDataset(entries, catalog, { production = false } = {}) {
       if (new Set(orders).size !== orders.length)
         throw new Error('Duplicate chapter order: ' + c + ' / ' + lang)
     }
-  for (const item of [...catalog.links, ...catalog.friends]) safeUrl(item.url)
+  for (const item of catalog.friends) safeUrl(item.url)
   for (const item of catalog.projects) if (item.url) safeUrl(item.url)
   for (const item of catalog.publications) {
     for (const link of item.links) safeUrl(link.href)
@@ -334,7 +334,6 @@ export function validateDataset(entries, catalog, { production = false } = {}) {
         ...catalog.courses,
         ...catalog.publications,
         ...catalog.projects,
-        ...catalog.links,
         ...catalog.friends
       ].some((e) => e.demo)
     )

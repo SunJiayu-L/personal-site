@@ -55,10 +55,6 @@ Title / Title EN、Description / Description EN、Slug、Role / Role EN、URL、
 
 URL 为 GitHub 公开仓库时，构建会读取 Star 数、主要语言和仓库描述；项目介绍仍以你填写的文字为准。请求失败保留原有资料。
 
-### Links
-
-Title、Description / Description EN、URL、Category、Published。Category 可设 Research、Learning、Tools，或添加自己的类别。
-
 ### Friends
 
 Title、Description / Description EN、URL、Avatar（稳定图片地址）、RSS（RSS 或 Atom 地址）、Published。

@@ -27,7 +27,6 @@ const sourceNames = {
   notes: 'NOTES',
   publications: 'PUBLICATIONS',
   projects: 'PROJECTS',
-  links: 'LINKS',
   friends: 'FRIENDS'
 }
 const sources = Object.fromEntries(
@@ -188,17 +187,6 @@ if (rows.projects)
       description: localized(p, 'Description'),
       role: localized(p, 'Role'),
       url: safeUrl(value(p.URL)),
-      demo: false
-    }
-  })
-if (rows.links)
-  catalog.links = rows.links.map((page) => {
-    const p = page.properties
-    return {
-      title: value(p.Title),
-      description: localized(p, 'Description'),
-      url: safeUrl(value(p.URL)),
-      category: value(p.Category) || 'Resources',
       demo: false
     }
   })

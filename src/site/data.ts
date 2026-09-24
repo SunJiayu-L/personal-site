@@ -48,13 +48,12 @@ export interface Publication {
   links: Array<{ type: string; href: string }>
   demo?: boolean
 }
-export const catalog = raw as Omit<typeof raw, 'friends' | 'friendFeed' | 'projects' | 'courses' | 'publications' | 'links'> & {
+export const catalog = raw as Omit<typeof raw, 'friends' | 'friendFeed' | 'projects' | 'courses' | 'publications'> & {
   friends: Friend[]
   friendFeed: FeedItem[]
   projects: Project[]
   courses: Course[]
   publications: Publication[]
-  links: Array<{ title: string; description: Localized; url: string; category: string; demo?: boolean }>
 }
 export const languages: Lang[] = ['zh', 'en']
 export const categories = [
@@ -97,4 +96,3 @@ export const visibleEntries = (entries: Entry[], lang: Lang) => {
     )
   ].sort((a, b) => b.data.date.localeCompare(a.data.date))
 }
-

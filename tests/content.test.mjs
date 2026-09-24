@@ -20,7 +20,6 @@ const catalog = () => ({
   courses: [{ slug: 'test-course' }],
   publications: [],
   projects: [],
-  links: [],
   friends: []
 })
 const entry = () => ({

@@ -229,41 +229,6 @@
       "url": {}
     }
   },
-  "links": {
-    "Title": {
-      "title": {}
-    },
-    "Published": {
-      "checkbox": {}
-    },
-    "Title EN": {
-      "rich_text": {}
-    },
-    "Description": {
-      "rich_text": {}
-    },
-    "Description EN": {
-      "rich_text": {}
-    },
-    "URL": {
-      "url": {}
-    },
-    "Category": {
-      "select": {
-        "options": [
-          {
-            "name": "Research"
-          },
-          {
-            "name": "Learning"
-          },
-          {
-            "name": "Tools"
-          }
-        ]
-      }
-    }
-  },
   "friends": {
     "Title": {
       "title": {}

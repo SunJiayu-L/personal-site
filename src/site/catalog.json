@@ -25,48 +25,6 @@
   "courses": [],
   "publications": [],
   "projects": [],
-  "links": [
-    {
-      "title": "arXiv",
-      "description": {
-        "zh": "浏览研究论文与最新预印本。",
-        "en": "Research papers and recent preprints."
-      },
-      "url": "https://arxiv.org/",
-      "category": "Research",
-      "demo": false
-    },
-    {
-      "title": "MIT OpenCourseWare",
-      "description": {
-        "zh": "开放课程、讲义和习题。",
-        "en": "Open courses, lecture notes, and assignments."
-      },
-      "url": "https://ocw.mit.edu/",
-      "category": "Learning",
-      "demo": false
-    },
-    {
-      "title": "MDN Web Docs",
-      "description": {
-        "zh": "Web 技术文档与实践参考。",
-        "en": "Documentation and practical references for the web."
-      },
-      "url": "https://developer.mozilla.org/",
-      "category": "Tools",
-      "demo": false
-    },
-    {
-      "title": "GitHub",
-      "description": {
-        "zh": "探索开源项目与开发工具。",
-        "en": "Explore open-source projects and developer tools."
-      },
-      "url": "https://github.com/",
-      "category": "Tools",
-      "demo": false
-    }
-  ],
   "friends": [],
   "friendFeed": []
 }

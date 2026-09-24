@@ -1,12 +1,10 @@
-# Fieldnotes · 个人网站
+# Sun · 个人网站
 
-基于 [Axi-Theme](https://github.com/Axi404/Axi-Theme) 二次开发，包含 **Blog / Academic / Course / Links / Friends** 五个栏目。保留 Apache-2.0 许可证与上游署名；使用了上游论文组件、图标、Tailwind 配置和 Shiki 转换器。
+基于 [Axi-Theme](https://github.com/Axi404/Axi-Theme) 二次开发，包含 **Home / Blog / Academic / Course / Friends** 五个栏目。保留 Apache-2.0 许可证与上游署名；使用了上游论文组件、图标、Tailwind 配置和 Shiki 转换器。
 
 ## 当前状态
 
-本地设计预览已实现。展示名、个人介绍、博客、课程和论文条目中的示例均明确标注；这些内容不代表你的真实经历。**Notion / GitHub 插件账号已连接，Notion 七个数据库已建立；源码已上传至 SunJiayu-L/personal-site；尚未配置定时同步令牌，也未公开部署。** 见 [接入进度](docs/CONNECTIONS.md)。
-
-当前品牌暂用 **Fieldnotes**。确认站名后，可修改 `src/site/Layout.astro` 中的导航与页脚名称及首页元信息。
+网站已部署到 https://sunjiayu-l.github.io/personal-site/zh/，通过 GitHub Actions 每小时同步 Notion。后台使用 Blog、Courses、Notes、Publications、Projects、Friends 六个数据库。Links 资源栏目已移除。品牌名称为 Sun。
 
 ## 本地运行
 
@@ -32,7 +30,6 @@ pnpm preview
 - Blog：Research、Technical、Daily Life；标签、系列、归档、阅读时间、正文目录、代码复制。
 - Academic：About Me、按年份排列的 Publications、Open-source Projects。
 - Course：课程列表、课程目录、章节正文；支持公式、代码、表格、前后章节跳转。
-- Links：按类别整理资源网站。
 - Friends：友链、RSS 动态、本站信息复制；未填写朋友名单时显示真实空状态。
 - 全站：中英切换、深浅色主题、响应式导航、站点地图、RSS、404 页面。
 
@@ -47,7 +44,7 @@ pnpm preview
 1. 当前账号已建立专用后台，见接入进度；不要重复初始化。以下初始化步骤仅供另建一套后台时使用。
 2. 初始化脚本默认只预览；在本地 `.env` 配置 `NOTION_SETUP_TOKEN` 与 `NOTION_PARENT_PAGE` 后执行：
    `node --env-file=.env scripts/setup-notion.mjs --apply`。
-   该操作在指定父页面下创建七个数据库，逐步保存创建进度以便重试。
+   该操作在指定父页面下创建六个数据库，逐步保存创建进度以便重试。
 3. 网站日常同步使用单独的只读集成 `NOTION_TOKEN`，并将网站数据库授权给它。初始化用的写入凭证不要配置到 GitHub Actions。
 4. 把 `.env.example` 复制为 `.env`，填写令牌与 data source IDs。数据库 ID 与 data source ID 不同；脚本输出位于 `.sync/notion-sources.env`。
 5. 执行 `pnpm sync:notion`，然后 `pnpm sync:friends`、`node scripts/sync-github.mjs` 和 `pnpm build`。
@@ -60,7 +57,7 @@ Blog、Courses、Notes 三个数据源必须配置；其他数据源可选，未
 
 1. 在你的账号创建 `personal-site` 仓库，将本项目代码上传到 main 分支，**不上传 node_modules、dist、.env、.sync**。
 2. 仓库 Settings → Pages → Source 选择 GitHub Actions。
-3. 在 Actions Secrets 中设置 `NOTION_TOKEN`；在 Actions Variables 中设置七项 `NOTION_*_SOURCE`。
+3. 在 Actions Secrets 中设置 `NOTION_TOKEN`；在 Actions Variables 中设置六项 `NOTION_*_SOURCE`。
 4. 默认自动识别项目仓库路径：`https://用户名.github.io/personal-site/`。用户主页仓库 `用户名.github.io` 自动使用根路径。自定义域名时设置 `SITE_URL` 为 HTTPS origin（不带路径），`BASE_PATH` 可留空。
 5. 填写真实个人资料，清除示例条目，最后把 catalog 中 `demo` 改成 false。首次上线建议发布一篇真实 Blog 文章。之后撤回最后一篇文章时，网站允许生成空列表，避免旧文章继续公开。
 6. 配置完凭证并清除示例后，设置 Actions Variable `SITE_READY=true`，再手动运行 **Sync Notion and deploy Pages**。默认保持关闭；每次提交仍会运行 **Check website** 验证预览构建。

@@ -91,8 +91,8 @@ const posts = visibleEntries(entries, lang)
       }
       <div class='home-note'>
         <div class='eyebrow'>BEYOND THE NOTEBOOK</div><p>
-          {t(lang, '有用的资源，有趣的朋友。', 'Useful resources. Interesting people.')}
-        </p><a class='text-link' href={url(lang, 'links')}>Links</a><span class='sep'>/</span><a
+          {t(lang, '有趣的朋友。', 'Interesting people.')}
+        </p><a
           class='text-link'
           href={url(lang, 'friends')}>Friends</a>
       </div>
@@ -103,11 +103,6 @@ const posts = visibleEntries(entries, lang)
       <h2>{t(lang, '学术与开源', 'Research & open source')}<span>Academic</span></h2><a
         href={url(lang, 'academic')}>{t(lang, '查看学术主页', 'Academic profile')} ↗</a>
     </div><div class='research-summary'>
-      <p>
-        {
-          local(catalog.profile.about, lang)
-        }
-      </p>
     </div>
   </section>
 </Layout>

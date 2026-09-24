@@ -1,11 +1,9 @@
 # 账号接入进度
 
-GitHub 已验证连接账号 SunJiayu-L，网站仓库为 https://github.com/SunJiayu-L/personal-site 。个人主页及中英文姓名“孙嘉渝 / Jiayu Sun”已填入网站。
+网站仓库：[SunJiayu-L/personal-site](https://github.com/SunJiayu-L/personal-site)。线上网站：[Sun](https://sunjiayu-l.github.io/personal-site/zh/)。
 
-Notion 已创建独立私有后台：[个人网站 · 内容管理](https://app.notion.com/p/3e4238b26d3181b58d82f903fea6325d)。七个数据库及 Notes → Courses 关联均已建立，当前为空，不会自动发布已有私人笔记。
+Notion 后台：[个人网站 · 内容管理](https://app.notion.com/p/3e4238b26d3181b58d82f903fea6325d)。使用 Blog、Courses、Notes、Publications、Projects、Friends 六个数据库，Notes 关联 Courses。Links 资源功能已移除，不再读取其数据源。
 
-数据源 ID 已保存于本机 `.sync/notion-sources.env`，该文件不会提交 Git。不要重复运行初始化脚本，否则会创建另一套数据库。
+GitHub Actions 已配置 NOTION_TOKEN，每小时同步已勾选 Published 的条目，也可手动运行。不要重复初始化数据库，也不要把令牌提交到仓库或发送到聊天中。
 
-定时同步仍需单独的 Notion 只读集成令牌，并授权访问上述后台；插件连接不能代替 GitHub Actions 的 NOTION_TOKEN。请将令牌保存为仓库的 Actions Secret，不要发送到聊天中。数据源 ID 应保存为同名 Actions Variables。
-
-网站尚未公开部署。个人简介、真实论文及首批文章仍待提供。完成配置后设置仓库变量 `SITE_READY=true` 才会启用部署；默认仅运行源码检查。
+CS285N 的九篇笔记已发布。请在网站 Notes 数据库中编辑副本；原 Computer / RL 中的笔记不自动复制。首页的学术摘要留空，个人介绍继续在 About 与 Academic 展示。
