@@ -6,4 +6,4 @@ Notion 后台：[个人网站 · 内容管理](https://app.notion.com/p/3e4238b2
 
 GitHub Actions 已配置 NOTION_TOKEN，每小时同步已勾选 Published 的条目，也可手动运行。不要重复初始化数据库，也不要把令牌提交到仓库或发送到聊天中。
 
-CS285N 的九篇笔记已发布。请在网站 Notes 数据库中编辑副本；原 Computer / RL 中的笔记不自动复制。首页的学术摘要留空，个人介绍继续在 About 与 Academic 展示。
+CS285N 的九篇笔记已发布。请直接编辑 Computer / RL 原笔记，使用正文第一块「发布到网站」待办框控制发布，详见 DIRECT-NOTES.md。首页的学术摘要留空，个人介绍继续在 About 与 Academic 展示。

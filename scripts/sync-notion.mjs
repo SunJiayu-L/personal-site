@@ -4,6 +4,7 @@ import fs from 'node:fs/promises'
 import { isIP } from 'node:net'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { readNotebook } from './private-notebooks.mjs'
 
 import {
   children,
@@ -83,6 +84,7 @@ const rows = {}
 for (const [key, id] of Object.entries(sources))
   if (id) rows[key] = await queryPublished(request, id)
 const courseById = new Map()
+const directCourses = new Set(rows.courses.filter(p => value(p.properties.Notebook)).map(p => p.id))
 catalog.courses = rows.courses.map((page) => {
   const p = page.properties,
     c = {
@@ -102,6 +104,8 @@ for (const kind of ['blog', 'notes'])
   for (const page of rows[kind]) {
     const p = page.properties,
       relation = p.Course?.relation || []
+    // Original notebooks are authoritative: never fall back to old copies on withdrawal.
+    if (kind === 'notes' && relation.some(r => directCourses.has(r.id))) continue
     if (kind === 'notes' && relation.length !== 1)
       throw new Error('Course note must belong to exactly one published course: ' + page.id)
     const entry = {
@@ -142,6 +146,16 @@ for (const kind of ['blog', 'notes'])
       frontmatter(entry, body)
     )
   }
+const routeAliases = JSON.parse(await fs.readFile(path.join(root, 'config/notebook-routes.json'), 'utf8'))
+for (const course of rows.courses.filter(p => directCourses.has(p.id))) {
+  for (const { entry, blocks } of await readNotebook(request, course, routeAliases)) {
+    const body = await renderBlocks(blocks, {
+      getChildren: id => children(request, id), saveImage
+    })
+    entries.push(entry)
+    await fs.writeFile(path.join(stage, 'entries', entry.lang + '-note-' + entry.course + '-' + entry.slug + '.md'), frontmatter(entry, body))
+  }
+}
 if (rows.publications)
   catalog.publications = rows.publications.map((page) => {
     const p = page.properties

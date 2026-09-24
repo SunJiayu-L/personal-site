@@ -1,3 +1,7 @@
+## 原笔记直接发布
+
+CS285N 已改为读取私人 RL 原笔记。请参阅 [原笔记发布说明](DIRECT-NOTES.md)。Courses 新增 Notebook（URL）字段；填写后该课程以原笔记首块的「发布到网站」勾选框为准，忽略旧 Notes 副本。以下 Notes 方式适用于未配置 Notebook 的其他课程。
+
 # Notion 内容管理
 
 API 版本固定为 2026-03-11，使用 data source 查询接口。只有 **Published 复选框勾选** 的行会进入网站。数据库无需公开到互联网，只需授权给只读集成。

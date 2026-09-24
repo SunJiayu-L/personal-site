@@ -82,3 +82,7 @@ Blog、Courses、Notes 三个数据源必须配置；其他数据源可选，未
 - `scripts/`：Notion / GitHub / RSS 同步、内容校验、构建
 - `.github/workflows/pages.yml`：自动同步与部署
 - `LICENSE`、`NOTICE`：上游许可证与改动说明
+
+## 私人笔记直接发布
+
+CS285N 已支持在原 RL 笔记正文第一块勾选「发布到网站」，无需复制正文。详见 [发布说明](docs/DIRECT-NOTES.md)。
