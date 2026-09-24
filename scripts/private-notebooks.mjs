@@ -21,7 +21,10 @@ export function publicationContent(blocks) {
   return blocks.slice(1)
 }
 
-export async function readNotebook(request, coursePage, aliases = {}) {
+export async function readNotebook(request, coursePage, aliases = {}, options = {}) {
+  const { kind = 'note', category, lang = 'zh', descriptions = {} } = options
+  if (!['note', 'blog'].includes(kind) || !['zh', 'en'].includes(lang) || (kind === 'blog' && !['research', 'technical', 'daily-life'].includes(category)))
+    throw new Error('Invalid private notebook publishing configuration')
   const p = coursePage.properties
   const root = notionPageId(value(p.Notebook))
   const rootPage = await request('pages/' + root)
@@ -43,9 +46,10 @@ export async function readNotebook(request, coursePage, aliases = {}) {
     const slug = aliases[child.id.replaceAll('-', '')] || 'note-' + child.id.replaceAll('-', '')
     result.push({
       entry: {
-        title, slug, lang: 'zh', kind: 'note', description: title,
+        title, slug, lang, kind, description: descriptions[child.id.replaceAll('-', '')] || title,
         date: page.created_time.slice(0, 10), tags: [],
-        course: value(p.Slug), order: i + 1, demo: false, published: true
+        ...(kind === 'note' ? { course: value(p.Slug), order: i + 1 } : { category, order: 0 }),
+        demo: false, published: true
       },
       blocks: body
     })

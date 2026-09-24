@@ -13,6 +13,6 @@ CS285N 读取私人 Computer / RL 目录下的原笔记，不再读取 Notes 中
 
 新笔记自动使用标题、创建日期及在目录中的顺序；网址由原页面 ID 生成，改标题不会改变网址。现有 CS285N 文章通过 config/notebook-routes.json 保留原网址。原始 Notion 页面无需开启互联网公开分享。
 
-Blog 当前仍使用后台 Blog 数据库的 Published 属性；若要从私人博客目录发布，需要另行登记该目录及分类，不能仅在任意私人页面加勾选框就发布。
+Blog / Research 已接入「人生计划 / 2026 Dashboard / Research」。在这个目录下的直接子页面正文第一块添加「发布到网站」待办框即可控制发布。目录与分类登记在 config/blog-notebooks.json。Technical 与 Daily Life 尚未登记。后台 Blog 数据库仍可用，避免将同一文章重复登记。
 
 读取失败时构建停止，保留上一次成功的网站；因此网络或权限故障期间，取消勾选不会即时撤回。需要确认 GitHub Actions 成功完成。

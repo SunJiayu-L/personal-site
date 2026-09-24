@@ -156,6 +156,17 @@ for (const course of rows.courses.filter(p => directCourses.has(p.id))) {
     await fs.writeFile(path.join(stage, 'entries', entry.lang + '-note-' + entry.course + '-' + entry.slug + '.md'), frontmatter(entry, body))
   }
 }
+const blogNotebooks = JSON.parse(await fs.readFile(path.join(root, 'config/blog-notebooks.json'), 'utf8'))
+for (const notebook of blogNotebooks) {
+  const source = { properties: { Notebook: { url: notebook.url } } }
+  for (const { entry, blocks } of await readNotebook(request, source, notebook.routes || {}, {
+    kind: 'blog', category: notebook.category, lang: notebook.lang || 'zh', descriptions: notebook.descriptions || {}
+  })) {
+    const body = await renderBlocks(blocks, { getChildren: id => children(request, id), saveImage })
+    entries.push(entry)
+    await fs.writeFile(path.join(stage, 'entries', entry.lang + '-blog-' + entry.slug + '.md'), frontmatter(entry, body))
+  }
+}
 if (rows.publications)
   catalog.publications = rows.publications.map((page) => {
     const p = page.properties
