@@ -189,6 +189,51 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3)
   </div>
   <script>
     const chinese = document.documentElement.lang === 'zh'
+    document.querySelectorAll<HTMLAnchorElement>('.prose a[href]').forEach((link) => {
+      let pdfUrl: URL
+      try {
+        pdfUrl = new URL(link.href, window.location.href)
+      } catch {
+        return
+      }
+      if (!pdfUrl.pathname.toLowerCase().endsWith('.pdf')) return
+
+      const title = link.textContent?.trim() || (chinese ? 'PDF 文档' : 'PDF document')
+      const figure = document.createElement('figure')
+      figure.className = 'pdf-embed'
+
+      const toolbar = document.createElement('figcaption')
+      toolbar.className = 'pdf-embed__toolbar'
+      const label = document.createElement('span')
+      label.className = 'pdf-embed__title'
+      label.textContent = title
+      const actions = document.createElement('span')
+      actions.className = 'pdf-embed__actions'
+      const openLink = link.cloneNode(true) as HTMLAnchorElement
+      openLink.textContent = chinese ? '打开 PDF' : 'Open PDF'
+      openLink.target = '_blank'
+      openLink.rel = 'noopener noreferrer'
+      const downloadLink = document.createElement('a')
+      downloadLink.href = pdfUrl.href
+      downloadLink.download = ''
+      downloadLink.textContent = chinese ? '下载' : 'Download'
+      actions.append(openLink, downloadLink)
+      toolbar.append(label, actions)
+
+      const frame = document.createElement('iframe')
+      frame.className = 'pdf-embed__frame'
+      frame.src = pdfUrl.href + (pdfUrl.hash ? '' : '#view=FitH')
+      frame.title = title
+      frame.loading = 'lazy'
+      figure.append(toolbar, frame)
+
+      const paragraph = link.parentElement
+      if (paragraph?.tagName === 'P' && paragraph.textContent?.trim() === title) {
+        paragraph.replaceWith(figure)
+      } else {
+        link.replaceWith(figure)
+      }
+    })
     document.querySelectorAll<HTMLPreElement>('.prose pre').forEach((pre) => {
       const code = pre.querySelector('code')?.textContent || ''
       const button = document.createElement('button')
