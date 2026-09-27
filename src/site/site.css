@@ -969,6 +969,49 @@ ul {
   margin: 25px 0;
   font-size: 0.875rem;
 }
+.comments {
+  margin-top: 46px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+.comments-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 8px;
+}
+.comments-heading h2 {
+  margin-top: 4px;
+  font-size: 1.35rem;
+}
+.comments-count,
+.comments-note {
+  color: var(--sub);
+  font-size: 0.8rem;
+}
+.comments-note {
+  margin: 0 0 22px;
+}
+.comments .wl-panel,
+.comments .wl-card {
+  border-color: var(--line);
+  background: var(--paper);
+}
+.comments .wl-editor {
+  color: var(--ink);
+}
+.comments .wl-header input,
+.comments .wl-editor {
+  color: var(--ink);
+}
+.comments .wl-header label,
+.comments .wl-info,
+.comments .wl-meta,
+.comments .wl-time,
+.comments .wl-power {
+  color: var(--sub);
+}
 .site-footer {
   max-width: 1000px;
   margin: 0 auto;
@@ -1330,6 +1373,8 @@ ul {
 }
 
 /* Preserve paragraph breaks in the personal introduction. */
-.intro p, .academic-about, .research-summary p {
+.intro p,
+.academic-about,
+.research-summary p {
   white-space: pre-line;
 }

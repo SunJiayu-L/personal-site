@@ -14,6 +14,8 @@ import {
   type Lang
 } from './data'
 import Layout from './Layout.astro'
+import WalineComments from './WalineComments.astro'
+import { walineServerURL } from './waline'
 
 interface Props {
   lang: Lang
@@ -42,6 +44,7 @@ const alternate = translation
   ? entryUrl(translation)
   : url(lang === 'zh' ? 'en' : 'zh', isNote ? 'course/' + entry.data.course : 'blog')
 const toc = headings.filter((h) => h.depth === 2 || h.depth === 3)
+const articlePath = entryUrl(entry)
 ---
 
 <Layout
@@ -99,8 +102,23 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3)
           <span class='category'>{isNote ? course?.code : entry.data.category}</span><time
             datetime={entry.data.date}>{dateLabel(entry.data.date, lang)}</time
           ><span>{readMinutes(entry.body)} {t(lang, '分钟阅读', 'min read')}</span>{
-            entry.data.demo && <span class='sample'>{t(lang, '示例笔记', 'SAMPLE NOTE')}</span>
-          }
+            walineServerURL && (
+              <>
+                <span>
+                  <span class='waline-pageview-count' data-path={articlePath}>
+                    —
+                  </span>{' '}
+                  {t(lang, '次浏览', 'views')}
+                </span>
+                <span>
+                  <span class='waline-comment-count' data-path={articlePath}>
+                    —
+                  </span>{' '}
+                  {t(lang, '条评论', 'comments')}
+                </span>
+              </>
+            )
+          }{entry.data.demo && <span class='sample'>{t(lang, '示例笔记', 'SAMPLE NOTE')}</span>}
         </div><h1 data-pagefind-meta='title'>{entry.data.title}</h1><p>
           {entry.data.description}
         </p><div class='tag-line'>
@@ -172,6 +190,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3)
           }
         </div>
       </nav>
+      <WalineComments {lang} path={articlePath} />
     </article>
     <aside class='sticky-nav toc' aria-label={t(lang, '本页目录', 'On this page')}>
       <div class='aside-label'>ON THIS PAGE</div>{
