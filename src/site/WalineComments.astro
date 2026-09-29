@@ -36,7 +36,7 @@ const serverURL = walineServerURL
         )}
       </p>
       <waline-comments data-server={serverURL} data-path={path} data-lang={lang}>
-        <div class='waline-root'>{t(lang, '评论加载中…', 'Loading comments…')}</div>
+        <div id='waline' class='waline-root'>{t(lang, '评论加载中…', 'Loading comments…')}</div>
       </waline-comments>
     </section>
   )
@@ -44,6 +44,12 @@ const serverURL = walineServerURL
 
 <script>
   import { commentCount, init } from '@waline/client'
+
+  const heartReaction =
+    'data:image/svg+xml,' +
+    encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d65f68" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>'
+    )
 
   class WalineComments extends HTMLElement {
     private cleanup?: () => void
@@ -68,13 +74,15 @@ const serverURL = walineServerURL
         requiredMeta: ['nick'],
         pageview: true,
         comment: true,
-        reaction: false,
+        reaction: [heartReaction],
         imageUploader: false,
         emoji: [
           'https://unpkg.com/@waline/emojis@1.4.0/bmoji',
           'https://unpkg.com/@waline/emojis@1.4.0/weibo'
         ],
         locale: {
+          reactionTitle: lang === 'zh-CN' ? '喜欢这篇文章？' : 'Like this article?',
+          reaction0: lang === 'zh-CN' ? '喜欢' : 'Like',
           placeholder:
             lang === 'zh-CN'
               ? '欢迎留言（支持 Markdown，无需登录）'
@@ -93,3 +101,69 @@ const serverURL = walineServerURL
   if (!customElements.get('waline-comments'))
     customElements.define('waline-comments', WalineComments)
 </script>
+
+<style>
+  #waline {
+    --waline-font-size: 16px;
+    --waline-avatar-size: 3.25rem;
+    --waline-m-avatar-size: 2.25rem;
+    --waline-avatar-radius: 50%;
+    --waline-box-shadow: none;
+    --waline-theme-color: var(--ink);
+    --waline-active-color: var(--blue);
+    --waline-color: var(--ink);
+    --waline-bg-color: var(--paper);
+    --waline-bg-color-light: var(--soft);
+    --waline-border-color: var(--line);
+    --waline-dark-grey: var(--sub);
+  }
+
+  #waline :global(.wl-reaction-title),
+  #waline :global(.wl-reaction-text) {
+    display: none;
+  }
+
+  #waline :global(.wl-reaction) {
+    margin-bottom: 0.5rem;
+  }
+
+  #waline :global(.wl-reaction-img) {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 35px;
+  }
+
+  #waline :global(.wl-reaction-votes) {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 0;
+    padding: 0.2rem 0.45rem;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    font-weight: 400;
+  }
+
+  #waline :global(.wl-reaction-item.active .wl-reaction-votes) {
+    background: var(--soft);
+    color: var(--blue);
+  }
+
+  #waline :global(.wl-reaction-votes::after) {
+    content: ' Like';
+  }
+
+  #waline :global(.wl-editor) {
+    width: calc(100% - 1rem);
+    padding: 0.35rem 0.5rem;
+  }
+
+  #waline :global(.wl-panel) {
+    margin: 0.5rem 0;
+    border: 0;
+  }
+</style>
