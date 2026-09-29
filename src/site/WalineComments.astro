@@ -15,26 +15,7 @@ const serverURL = walineServerURL
 
 {
   serverURL && (
-    <section class='comments' aria-labelledby='comments-title' data-pagefind-ignore>
-      <div class='comments-heading'>
-        <div>
-          <div class='eyebrow'>{t(lang, '交流', 'Discussion')}</div>
-          <h2 id='comments-title'>{t(lang, '评论', 'Comments')}</h2>
-        </div>
-        <span class='comments-count'>
-          <span class='waline-comment-count' data-path={path}>
-            —
-          </span>{' '}
-          {t(lang, '条评论', 'comments')}
-        </span>
-      </div>
-      <p class='comments-note'>
-        {t(
-          lang,
-          '无需登录。昵称必填，邮箱可选；填写邮箱仅用于头像与回复提醒，不会公开显示。',
-          'No login required. A nickname is required and email is optional; email is only used for avatars and reply notifications.'
-        )}
-      </p>
+    <section id='comments-title' class='comments' aria-label={t(lang, '评论', 'Comments')} data-pagefind-ignore>
       <waline-comments data-server={serverURL} data-path={path} data-lang={lang}>
         <div id='waline' class='waline-root'>{t(lang, '评论加载中…', 'Loading comments…')}</div>
       </waline-comments>
@@ -155,6 +136,10 @@ const serverURL = walineServerURL
 
   #waline :global(.wl-reaction-votes::after) {
     content: ' Like';
+  }
+
+  :global(html[lang='zh'] #waline .wl-reaction-votes::after) {
+    content: ' 喜欢';
   }
 
   #waline :global(.wl-editor) {
