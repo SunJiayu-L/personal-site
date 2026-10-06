@@ -82,6 +82,15 @@ test('literal dollar text stays text while native equations remain math', () => 
   assert.equal(richText(rt('$x^2$ costs $5')), '\\$x^2\\$ costs \\$5')
   assert.equal(richText([{ type: 'equation', equation: { expression: 'x^2' } }]), '$x^2$')
 })
+test('block renderer normalizes legacy emphasis without touching code fences', async () => {
+  const tick = String.fromCharCode(96)
+  const result = await renderBlocks([
+    { id: 'p', type: 'paragraph', paragraph: { rich_text: rt('受到**分布偏移**影响以及 ' + tick + '**literal**' + tick) } },
+    { id: 'c', type: 'code', code: { language: 'text', rich_text: rt('**keep literal**') } }
+  ], { getChildren: async () => [], saveImage: async () => '' })
+  assert.match(result, /受到<strong>分布偏移<\/strong>影响/)
+  assert.ok(result.includes(tick.repeat(3) + 'text\n**keep literal**\n' + tick.repeat(3)))
+})
 test('nested lists, code, math, tables and images render', async () => {
   const children = {
     list: [{ id: 'child', type: 'paragraph', paragraph: { rich_text: rt('nested') } }],

@@ -147,6 +147,33 @@ export async function children(request, id) {
   } while (cursor)
   return items
 }
+function normalizeBoldMarkup(markdown) {
+  let fence = null
+  return markdown
+    .split('\n')
+    .map((line) => {
+      const marker = line.match(/^\s*((?:\x60){3,}|~{3,})/)
+      if (fence) {
+        if (marker && marker[1][0] === fence.char && marker[1].length >= fence.length) fence = null
+        return line
+      }
+      if (marker) {
+        fence = { char: marker[1][0], length: marker[1].length }
+        return line
+      }
+      const inlineCode = []
+      const protectedLine = line.replace(/((?:\x60)+)(.+?)\1/g, (match) => {
+        inlineCode.push(match)
+        return '\u0000' + (inlineCode.length - 1) + '\u0000'
+      })
+      return protectedLine
+        .replace(/((?:\\)?\*\*)(.+?)((?:\\)?\*\*)/g, '<strong>$2</strong>')
+        .replace(/(?:\\)?\*\*/g, '')
+        .replace(/\u0000(\d+)\u0000/g, (_, index) => inlineCode[Number(index)])
+    })
+    .join('\n')
+}
+
 export async function renderBlocks(blocks, { getChildren, saveImage }, depth = 0) {
   if (depth > 30) throw new Error('Notion nesting exceeds 30 levels')
   const output = []
@@ -285,7 +312,7 @@ export async function renderBlocks(blocks, { getChildren, saveImage }, depth = 0
     if (nested.length) result += '\n\n' + (await child())
     output.push(result)
   }
-  return output.join('\n\n')
+  return normalizeBoldMarkup(output.join('\n\n'))
 }
 export function validateDataset(entries, catalog, { production = false } = {}) {
   const seen = new Set(),
