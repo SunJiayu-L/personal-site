@@ -167,8 +167,8 @@ function normalizeBoldMarkup(markdown) {
         return '\u0000' + (inlineCode.length - 1) + '\u0000'
       })
       const normalized = protectedLine
-        .replace(/((?:\\\*){2}|\*\*)(.+?)((?:\\\*){2}|\*\*)/g, '<strong>$2</strong>')
-        .replace(/(?:\\\*){2}|\*\*/g, '')
+        .replace(/((?:\\?\*){2})(.+?)((?:\\?\*){2})/g, '<strong>$2</strong>')
+        .replace(/(?:\\?\*){2}/g, '')
         .replace(/\u0000(\d+)\u0000/g, (_, index) => inlineCode[Number(index)])
       return normalized.replaceAll('\\*\\*', '').replaceAll('**', '')
     })
