@@ -4,6 +4,7 @@ import test from 'node:test'
 import { readEntry } from '../scripts/check-content.mjs'
 import {
   frontmatter,
+  normalizeBoldMarkup,
   queryPublished,
   renderBlocks,
   richText,
@@ -77,6 +78,9 @@ test('paired Markdown bold markers render as bold across text runs', () => {
   assert.equal(richText([...rt('**bo'), ...rt('ld**')]), '<strong>bold</strong>')
   assert.equal(richText(rt('one * literal')), 'one \\* literal')
   assert.equal(richText(rt('trailing **')), 'trailing ')
+})
+test('legacy mixed-escape bold markers are normalized', () => {
+  assert.equal(normalizeBoldMarkup('轨迹长度（时域 horizon*\\*）为 H。'), '轨迹长度（时域 horizon）为 H。')
 })
 test('literal dollar text stays text while native equations remain math', () => {
   assert.equal(richText(rt('$x^2$ costs $5')), '\\$x^2\\$ costs \\$5')

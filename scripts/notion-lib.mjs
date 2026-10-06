@@ -147,7 +147,7 @@ export async function children(request, id) {
   } while (cursor)
   return items
 }
-function normalizeBoldMarkup(markdown) {
+export function normalizeBoldMarkup(markdown) {
   let fence = null
   return markdown
     .split('\n')
