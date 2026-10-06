@@ -45,7 +45,7 @@ export function escapeText(s = '') {
 }
 function restoreBoldMarkup(text) {
   return text
-    .replace(/\\\*\\\*(.+?)\\\*\\\*/g, '**$1**')
+    .replace(/\\\*\\\*(.+?)\\\*\\\*/g, '<strong>$1</strong>')
     .replace(/\\\*\\\*/g, '')
 }
 

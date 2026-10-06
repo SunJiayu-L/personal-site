@@ -73,8 +73,8 @@ test('rich text escapes HTML and rejects executable links', () => {
   assert.throws(() => safeUrl('https://name:secret@example.com/'), /Credentials/)
 })
 test('paired Markdown bold markers render as bold across text runs', () => {
-  assert.equal(richText(rt('**bold** and **also bold**')), '**bold** and **also bold**')
-  assert.equal(richText([...rt('**bo'), ...rt('ld**')]), '**bold**')
+  assert.equal(richText(rt('**bold** and **also bold**')), '<strong>bold</strong> and <strong>also bold</strong>')
+  assert.equal(richText([...rt('**bo'), ...rt('ld**')]), '<strong>bold</strong>')
   assert.equal(richText(rt('one * literal')), 'one \\* literal')
   assert.equal(richText(rt('trailing **')), 'trailing ')
 })
