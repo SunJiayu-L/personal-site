@@ -43,6 +43,10 @@ export function escapeText(s = '') {
     .replace(/([\\\x60*_[\]{}|$])/g, '\\$1')
     .replace(/^([>#\-+]|\d+\.)/gm, '\\$1')
 }
+function restoreBoldMarkup(text) {
+  return text.replace(/\\\*\\\*(.+?)\\\*\\\*/g, '**$1**')
+}
+
 export function richText(items = []) {
   return items
     .map((item) => {
@@ -56,6 +60,7 @@ export function richText(items = []) {
         )
         s = fence + ' ' + raw + ' ' + fence
       } else {
+        s = restoreBoldMarkup(s)
         if (a.bold) s = '**' + s + '**'
         if (a.italic) s = '*' + s + '*'
         if (a.strikethrough) s = '~~' + s + '~~'
