@@ -74,7 +74,7 @@ test('rich text escapes HTML and rejects executable links', () => {
 })
 test('paired literal Markdown bold markers render as bold while unmatched markers stay escaped', () => {
   assert.equal(richText(rt('**bold** and **also bold**')), '**bold** and **also bold**')
-  assert.equal(richText(rt('one * literal')), 'one \* literal')
+  assert.equal(richText(rt('one * literal')), String.raw`one \* literal`)
 })
 test('literal dollar text stays text while native equations remain math', () => {
   assert.equal(richText(rt('$x^2$ costs $5')), '\\$x^2\\$ costs \\$5')
