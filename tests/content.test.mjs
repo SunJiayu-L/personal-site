@@ -72,9 +72,11 @@ test('rich text escapes HTML and rejects executable links', () => {
   assert.throws(() => richText([{ ...rt('x')[0], href: 'javascript:alert(1)' }]), /protocol/)
   assert.throws(() => safeUrl('https://name:secret@example.com/'), /Credentials/)
 })
-test('paired literal Markdown bold markers render as bold while unmatched markers stay escaped', () => {
+test('paired Markdown bold markers render as bold across text runs', () => {
   assert.equal(richText(rt('**bold** and **also bold**')), '**bold** and **also bold**')
-  assert.equal(richText(rt('one * literal')), String.raw`one \* literal`)
+  assert.equal(richText([...rt('**bo'), ...rt('ld**')]), '**bold**')
+  assert.equal(richText(rt('one * literal')), 'one \\* literal')
+  assert.equal(richText(rt('trailing **')), 'trailing ')
 })
 test('literal dollar text stays text while native equations remain math', () => {
   assert.equal(richText(rt('$x^2$ costs $5')), '\\$x^2\\$ costs \\$5')

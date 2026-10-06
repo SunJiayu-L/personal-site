@@ -44,11 +44,13 @@ export function escapeText(s = '') {
     .replace(/^([>#\-+]|\d+\.)/gm, '\\$1')
 }
 function restoreBoldMarkup(text) {
-  return text.replace(/\\\*\\\*(.+?)\\\*\\\*/g, '**$1**')
+  return text
+    .replace(/\\\*\\\*(.+?)\\\*\\\*/g, '**$1**')
+    .replace(/\\\*\\\*/g, '')
 }
 
 export function richText(items = []) {
-  return items
+  return restoreBoldMarkup(items
     .map((item) => {
       if (item.type === 'equation') return '$' + item.equation.expression + '$'
       const raw = item.plain_text ?? item.text?.content ?? ''
@@ -60,7 +62,6 @@ export function richText(items = []) {
         )
         s = fence + ' ' + raw + ' ' + fence
       } else {
-        s = restoreBoldMarkup(s)
         if (a.bold) s = '**' + s + '**'
         if (a.italic) s = '*' + s + '*'
         if (a.strikethrough) s = '~~' + s + '~~'
@@ -69,7 +70,7 @@ export function richText(items = []) {
       if (href) s = '[' + s + '](<' + safeUrl(href, { allowMail: true }).replace(/>/g, '%3E') + '>)'
       return s
     })
-    .join('')
+    .join(''))
 }
 export function createNotionClient(token, fetcher = fetch) {
   if (!token) throw new Error('NOTION_TOKEN is missing')
