@@ -782,6 +782,21 @@ ul {
 .prose strong {
   color: var(--ink);
 }
+.prose .notion-columns {
+  display: grid;
+  grid-template-columns: repeat(var(--notion-column-count, 2), minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+.prose .notion-column {
+  min-width: 0;
+}
+.prose .notion-column > :first-child {
+  margin-top: 0;
+}
+.prose .notion-column > :last-child {
+  margin-bottom: 0;
+}
 .prose li {
   margin: 0.4em 0;
 }
@@ -1328,6 +1343,9 @@ ul {
   }
   .article .prose {
     font-size: 0.97rem;
+  }
+  .prose .notion-columns {
+    grid-template-columns: minmax(0, 1fr);
   }
   .pdf-embed__toolbar {
     align-items: flex-start;

@@ -300,9 +300,18 @@ export async function renderBlocks(blocks, { getChildren, saveImage }, depth = 0
         result = '**' + rich + '**'
         break
       case 'column_list':
+        result =
+          '<div class="notion-columns" style="--notion-column-count: ' +
+          Math.max(1, nested.length) +
+          '">\n\n' +
+          (await child()) +
+          '\n\n</div>'
+        output.push(result)
+        continue
       case 'column':
-        result = ''
-        break
+        result = '<div class="notion-column">\n\n' + (await child()) + '\n\n</div>'
+        output.push(result)
+        continue
       case 'table_of_contents':
         continue
       default:

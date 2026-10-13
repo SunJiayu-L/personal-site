@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
+import { createMarkdownProcessor } from '@astrojs/markdown-remark'
+import { parse } from 'node-html-parser'
+import rehypeKatex from 'rehype-katex'
+import remarkMath from 'remark-math'
+
 import { readEntry } from '../scripts/check-content.mjs'
 import {
   frontmatter,
@@ -132,6 +137,42 @@ test('nested lists, code, math, tables and images render', async () => {
   assert.ok(result.includes('$$\nx^2\n$$'))
   assert.match(result, /!\[image\]\(\/notion\/test.png\)/)
   assert.ok(result.includes('| A | B |\n| --- | --- |'))
+})
+test('Notion columns keep headings and native equations inside separate HTML columns', async () => {
+  const children = {
+    columns: [
+      { id: 'left', type: 'column', has_children: true, column: {} },
+      { id: 'right', type: 'column', has_children: true, column: {} }
+    ],
+    left: [
+      { type: 'heading_3', heading_3: { rich_text: rt('Likelihood ratio') } },
+      { type: 'equation', equation: { expression: '\\nabla_\\theta F' } }
+    ],
+    right: [
+      { type: 'heading_3', heading_3: { rich_text: rt('Reparameterization') } },
+      { type: 'equation', equation: { expression: 'J_g^\\top\\nabla_a Q' } }
+    ]
+  }
+  const markdown = await renderBlocks(
+    [{ id: 'columns', type: 'column_list', has_children: true, column_list: {} }],
+    { getChildren: async (id) => children[id], saveImage: async () => '' }
+  )
+  const processor = await createMarkdownProcessor({
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex]
+  })
+  const html = parse((await processor.render(markdown)).code)
+  const columns = html.querySelector('.notion-columns')
+  assert.ok(columns)
+  assert.equal(columns.getAttribute('style'), '--notion-column-count: 2')
+  const panels = columns.querySelectorAll('.notion-column')
+  assert.equal(panels.length, 2)
+  assert.equal(panels[0].querySelector('h3').text, 'Likelihood ratio')
+  assert.equal(panels[1].querySelector('h3').text, 'Reparameterization')
+  for (const panel of panels) {
+    assert.equal(panel.querySelectorAll('.katex-display').length, 1)
+    assert.equal(panel.querySelectorAll('pre, code, .katex-error').length, 0)
+  }
 })
 test('unsupported blocks fail with their location', async () => {
   await assert.rejects(
