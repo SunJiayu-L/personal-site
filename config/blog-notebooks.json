@@ -4,10 +4,12 @@
     "category": "research",
     "lang": "zh",
     "routes": {
-      "3e5238b26d3180799ed2f309f2e92ad8": "hao-su-china3dv-notes"
+      "3e5238b26d3180799ed2f309f2e92ad8": "hao-su-china3dv-notes",
+      "40b238b26d3181e2b3e0ebedc83a0c6b": "robotics-universal-post-training-notes"
     },
     "descriptions": {
-      "3e5238b26d3180799ed2f309f2e92ad8": "从感知与行动的闭环出发，梳理几何重建、视频生成与 VLA 的物理建模局限，以及交互学习和通用物理智能的研究方向。"
+      "3e5238b26d3180799ed2f309f2e92ad8": "从感知与行动的闭环出发，梳理几何重建、视频生成与 VLA 的物理建模局限，以及交互学习和通用物理智能的研究方向。",
+      "40b238b26d3181e2b3e0ebedc83a0c6b": "从演示能力到可靠部署，理解机器人 RL 的样本与稳定性难题、EXPO-FT 的编辑与吸收闭环，以及奖励、复位和人工反馈协议。"
     }
   },
   {
